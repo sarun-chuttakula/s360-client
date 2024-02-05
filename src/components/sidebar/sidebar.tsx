@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   const menus = [
     { name: "dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "user", link: "/user", icon: AiOutlineUser },
+    { name: "GroupChat", link: "/GroupChat", icon: AiOutlineUser },
     { name: "messages", link: "/messages", icon: FiMessageSquare },
     {
       name: "analytics",
@@ -68,9 +68,6 @@ const Sidebar = () => {
             </Link>
           ))}
         </div>
-      </div>
-      <div className="m-3 text-xl text-gray-900 font-semibold">
-        REACT TAILWIND
       </div>
     </section>
   );
