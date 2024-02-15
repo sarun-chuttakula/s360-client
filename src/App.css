@@ -1,79 +1,151 @@
+/* Resetting CSS */
 * {
-  /* width: 100%;
-  height: 100%; */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* border: 1px solid olive; */
 }
+
+/* App container styles */
 .app-container {
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
+
 .top-bar {
   width: 100%;
   height: 7%;
-  background-color: #3b71ca;
+  background-color: black;
 }
 
 .main {
-  width: 100%;
-  height: 93%;
-  /* border: yellow 1px solid; */
+  flex: 1;
   display: flex;
 }
 
+/* CSS for Sidebar component */
 .side-bar {
-  width: 17%;
-  height: 100%;
-  color: white;
-  /* border: blue 1px solid; */
-  background-color: #0e0e0e;
-  /* border-radius: 0 20px 20px 0; */
-  /* position: static; */
+  width: 250px;
+  background-color: black;
+  color: #fff;
+  padding-top: 50px;
 }
 
-.context-container {
-  width: 93%;
-  height: 100%;
+.side-bar a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
 }
 
-.side-bar ul {
-  list-style: none;
+.side-bar a:hover {
+  background-color: #555;
+}
+
+.dashboard {
+  flex: 1;
+  background-color: #f9f9f9;
+  padding: 100px;
+}
+
+/* NoticeBoard component styles */
+.notice-board {
+  width: 400px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.notice-list {
+  list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
-.side-bar ul li {
-  padding: 10px;
-  text-align: center;
-  margin-top: 20px;
-  /* border-bottom: 1px solid #e0e0e0; */
-  cursor: pointer;
-  /* position: absolute; */
+.notice-item {
+  background-color: #ffffff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slide-in 0.5s ease-in-out;
 }
 
-.profileIcon {
-  margin-top: 20px;
-  right: 30px;
-  border: 1px solid white;
+.notice-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.notice-description {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.notice-image {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.notice-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background-color: red;
   border-radius: 50%;
+  animation: blink 1s infinite alternate;
 }
 
-.Signup-container {
-  height: 100vh;
-  width: 100vw;
+/* Feedback component styles */
+.feedback {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 102;
+}
+
+.feedback-icon {
+  background-color: #007bff;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  border: #0e0e0e 1px solid;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 103;
 }
 
-.Signup-container form {
-  height: 50%;
-  width: 50%;
-  border: 1px solid red;
+.chat-box {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 20px;
+  animation: slide-up 0.3s ease;
+}
+
+/* Additional styles for animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

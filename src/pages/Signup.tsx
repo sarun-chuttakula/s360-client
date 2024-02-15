@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Register } from "../api";
+import { ApiResponse } from "../interfaces/Auth";
 
-const Signup: React.FC = () => {
+const SignupScreen: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstname: "",
     email: "",
@@ -14,24 +18,9 @@ const Signup: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:4000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to register user");
-      }
-
-      console.log("User registered successfully");
-    } catch (error: any) {
-      console.error("Error during registration:", error.message);
-    }
-    console.log("Form submitted with data:", formData);
+    const response: ApiResponse = await Register(formData);
+    if (response.success) navigate("/dashboard");
+    else navigate("/login");
   };
   return (
     <div className="Signup-container">
@@ -44,13 +33,56 @@ const Signup: React.FC = () => {
             type="text"
             name="firstname"
             id="firstname"
+            placeholder="Enter your first name"
             value={formData.firstname}
+            className="form-control"
             onChange={handleChange}
           />
+
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            className="form-control"
+            onChange={handleChange}
+          />
+
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            className="form-control"
+            onChange={handleChange}
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            className="form-control"
+            onChange={handleChange}
+          />
+
+          <button type="submit" className="btn btn-primary">
+            Sign Up
+          </button>
+
+          <p>
+            Already have an account? <a href="/login">Login</a>
+          </p>
         </div>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default SignupScreen;
