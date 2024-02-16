@@ -9,16 +9,15 @@ const GroupChat = () => {
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [messageInput, setMessageInput] = useState("");
-  const [currentPage, setCurrentPage] = useState(1); // State for current page
+  const [currentPage, setCurrentPage] = useState(1);
   const [reachedFirstMessage, setReachedFirstMessage] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    // Fetch group data from the API
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
     fetch("http://localhost:5001/group/", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,6 +44,7 @@ const GroupChat = () => {
       setUserRole(decodedToken.role);
     }
   }, []);
+
   const decodeJwtToken = (token: string) => {
     try {
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
@@ -57,22 +57,19 @@ const GroupChat = () => {
 
   useEffect(() => {
     if (selectedGroup) {
-      // Fetch messages when a group is selected
       const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE";
-      fetchMessages(selectedGroup.id, token, currentPage); // Pass currentPage to fetchMessages
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
+      fetchMessages(selectedGroup.id, token, currentPage);
     }
-  }, [selectedGroup, currentPage]); // Include currentPage in the dependency array
+  }, [selectedGroup, currentPage]);
 
   useEffect(() => {
-    // Listen for scroll events on the chat container
     const handleScroll = () => {
       if (
         chatContainerRef.current &&
         chatContainerRef.current.scrollTop === 0 &&
         !reachedFirstMessage
       ) {
-        // If scrolled to the top and not yet reached the first message
         fetchPreviousMessages();
       }
     };
@@ -86,7 +83,7 @@ const GroupChat = () => {
         chatContainerRef.current.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [reachedFirstMessage]); // Listen for changes in reachedFirstMessage state
+  }, [reachedFirstMessage]);
 
   const fetchMessages = (groupId: string, token: string, page: number) => {
     fetch(`http://localhost:5001/message/?groupId=${groupId}&page=${page}`, {
@@ -102,7 +99,6 @@ const GroupChat = () => {
       })
       .then((data: ApiResponse) => {
         if (data.success) {
-          // Append new messages if scrolling down, prepend if scrolling up
           if (currentPage === 1) {
             setMessages(data.data);
           } else {
@@ -118,7 +114,6 @@ const GroupChat = () => {
   };
 
   const fetchPreviousMessages = () => {
-    // Fetch previous messages when scrolled to the top
     if (selectedGroup && currentPage > 1) {
       setCurrentPage(currentPage - 1);
     } else {
@@ -128,8 +123,8 @@ const GroupChat = () => {
 
   const handleGroupClick = (group: Group) => {
     setSelectedGroup(group);
-    setCurrentPage(1); // Reset currentPage when a new group is selected
-    setReachedFirstMessage(false); // Reset reachedFirstMessage state
+    setCurrentPage(1);
+    setReachedFirstMessage(false);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,20 +132,20 @@ const GroupChat = () => {
   };
 
   const handleMessageSend = () => {
-    if (messageInput.trim() === "") return; // Prevent sending empty messages
+    if (messageInput.trim() === "") return;
     sendMessage();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent default form submission behavior
+      event.preventDefault();
       sendMessage();
     }
   };
 
   const sendMessage = () => {
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
     fetch("http://localhost:5001/message/", {
       method: "POST",
       headers: {
@@ -182,9 +177,40 @@ const GroupChat = () => {
         console.error("Error sending message:", error);
       });
   };
+
   const handleAddGroup = (groupData: GroupData) => {
-    // Your logic for adding the group
     console.log("Adding group:", groupData);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
+    fetch("http://localhost:5001/group/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(groupData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add group");
+        }
+        return response.json();
+      })
+      .then((data: ApiResponse) => {
+        if (data.success) {
+          console.log("Group added successfully:", data.data);
+          // Fetch updated group list after adding the group
+          setShowForm(false);
+        } else {
+          console.error("Failed to add group:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding group:", error);
+      });
+  };
+
+  const handleCloseForm = () => {
     setShowForm(false);
   };
 
@@ -205,10 +231,22 @@ const GroupChat = () => {
             </li>
           ))}
         </ul>
-        {/* Render "Add Group" button for teachers and admins */}
-        {/* {(userRole === "teacher" || userRole === "admin") && (
-          <button onClick={handleAddGroup}>Add Group</button>
-        )} */}
+        <div className="add-group">
+          {userRole === "teacher" || userRole === "admin" ? (
+            showForm ? (
+              <GroupForm
+                onAddGroup={handleAddGroup}
+                onClose={handleCloseForm}
+              />
+            ) : (
+              <AiOutlinePlusCircle
+                className="add-group-icon"
+                size={30}
+                onClick={() => setShowForm(true)}
+              />
+            )
+          ) : null}
+        </div>
       </div>
 
       <div className="chat-container" ref={chatContainerRef}>
@@ -228,7 +266,6 @@ const GroupChat = () => {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
               />
-              {/* <button onClick={handleMessageSend}>Send</button> */}
               <IoSend
                 className="send-icon"
                 size={30}
@@ -238,17 +275,6 @@ const GroupChat = () => {
           </div>
         ) : (
           <div className="text-center">Select a group to start chatting</div>
-        )}
-      </div>
-      <div className="add-group">
-        {showForm ? (
-          <GroupForm onAddGroup={handleAddGroup} />
-        ) : (
-          <AiOutlinePlusCircle
-            className="add-group-icon"
-            size={30}
-            onClick={() => setShowForm(true)}
-          />
         )}
       </div>
     </div>

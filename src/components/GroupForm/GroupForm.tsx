@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// Define the type for the group data
 export interface GroupData {
   name: string;
   description: string;
@@ -8,10 +7,11 @@ export interface GroupData {
 }
 
 interface GroupFormProps {
-  onAddGroup: (groupData: GroupData) => void; // Define the type for the onAddGroup prop
+  onAddGroup: (groupData: GroupData) => void;
+  onClose: () => void; // Add a prop to handle closing the form
 }
 
-const GroupForm: React.FC<GroupFormProps> = ({ onAddGroup }) => {
+const GroupForm: React.FC<GroupFormProps> = ({ onAddGroup, onClose }) => {
   const [groupName, setGroupName] = useState("");
   const [groupDescription, setGroupDescription] = useState("");
   const [adminId, setAdminId] = useState("");
@@ -26,36 +26,46 @@ const GroupForm: React.FC<GroupFormProps> = ({ onAddGroup }) => {
     setGroupName("");
     setGroupDescription("");
     setAdminId("");
+    onClose(); // Close the form after submission
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Group Name:
-        <input
-          type="text"
-          value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
-        />
-      </label>
-      <label>
-        Group Description:
-        <input
-          type="text"
-          value={groupDescription}
-          onChange={(e) => setGroupDescription(e.target.value)}
-        />
-      </label>
-      <label>
-        Admin ID:
-        <input
-          type="text"
-          value={adminId}
-          onChange={(e) => setAdminId(e.target.value)}
-        />
-      </label>
-      <button type="submit">Create Group</button>
-    </form>
+    <div className="group-form-overlay">
+      <div className="group-form-container">
+        <form onSubmit={handleSubmit}>
+          <label className="group-form-label">
+            Group Name:
+            <input
+              type="text"
+              value={groupName}
+              onChange={(e) => setGroupName(e.target.value)}
+              className="group-form-input"
+            />
+          </label>
+          <label className="group-form-label">
+            Group Description:
+            <input
+              type="text"
+              value={groupDescription}
+              onChange={(e) => setGroupDescription(e.target.value)}
+              className="group-form-input"
+            />
+          </label>
+          <label className="group-form-label">
+            Admin ID:
+            <input
+              type="text"
+              value={adminId}
+              onChange={(e) => setAdminId(e.target.value)}
+              className="group-form-input"
+            />
+          </label>
+          <button type="submit" className="group-form-button">
+            Create Group
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 
