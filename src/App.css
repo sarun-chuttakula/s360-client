@@ -238,6 +238,7 @@ ul > li {
 
 /* Chat Container */
 .chat-container {
+  position: relative; /* Make the container position relative */
   flex: 3;
   background-color: #ecf0f1; /* Light grey */
   padding: 20px;
@@ -247,11 +248,15 @@ ul > li {
 .chat-header {
   font-size: 20px;
   margin-bottom: 20px;
+  color: #fff; /* White text color */
+  background-color: #2c3e50; /* Dark blue background color */
+  padding: 10px 20px; /* Add padding to top and bottom */
+  border-radius: 5px; /* Add border radius for rounded corners */
 }
 
 /* Chat Messages */
 .chat-messages {
-  height: calc(100% - 60px); /* Adjust height according to chat input */
+  height: calc(100% - 110px); /* Adjust height according to chat input */
   overflow-y: auto;
   margin-bottom: 20px;
 }
@@ -266,6 +271,7 @@ ul > li {
   align-items: center;
   position: absolute; /* Position absolute */
   bottom: 0; /* Position at the bottom */
+  left: 0; /* Align to the left */
 }
 
 /* Input Field */
