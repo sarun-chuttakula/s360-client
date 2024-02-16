@@ -30,7 +30,7 @@ const Feedback = () => {
       headers: {
         "Content-Type": "application/json",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU0YzBkYmY4LWQ3ODMtNDkwZS05NTRlLTBjNDNjMmY4MmFmZCIsInJvbGUiOiJzdHVkZW50IiwidXVpZCI6ImNlYzJmZDRkLTczMWUtNDc1ZS1hOGIyLTU1NzFhN2JhMTYxZSIsImV4cCI6MTcwODAyNTQ5NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODAyMTg5Nn0.LrNLUhtRFQzNZ8dJAh2N2fyCiLlfbVl1lqEYxrF_wjM",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE",
       },
       body: JSON.stringify(feedback),
     })
@@ -49,10 +49,7 @@ const Feedback = () => {
   };
 
   return (
-    <div
-      className="feedback"
-      style={{ position: "fixed", bottom: "20px", right: "20px" }}
-    >
+    <div className="feedback">
       <div className="feedback-icon" onClick={handleToggleChatBox}>
         <VscFeedback />
       </div>

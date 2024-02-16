@@ -49,7 +49,6 @@
   background-color: #f9f9f9;
   padding: 100px;
 }
-
 /* NoticeBoard component styles */
 .notice-board {
   width: 400px;
@@ -58,11 +57,13 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   animation: fade-in 0.5s ease-in-out;
+  position: relative;
 }
 
 .notice-list {
   list-style-type: none;
   padding: 0;
+  margin-top: 20px;
 }
 
 .notice-item {
@@ -72,16 +73,19 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   animation: slide-in 0.5s ease-in-out;
+  position: relative;
 }
 
 .notice-title {
   font-size: 20px;
   margin-bottom: 5px;
+  color: #333;
 }
 
 .notice-description {
   font-size: 16px;
   margin-bottom: 10px;
+  color: #666;
 }
 
 .notice-image {
@@ -89,15 +93,59 @@
   border-radius: 8px;
 }
 
-.notice-indicator {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 10px;
-  height: 10px;
-  background-color: red;
+/* Add button styles */
+.add-notice-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
   border-radius: 50%;
-  animation: blink 1s infinite alternate;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 20px; /* Adjust position from top */
+  right: 20px; /* Adjust position from right */
+}
+
+.add-notice-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.notice-form {
+  margin-top: 20px; /* Adjust margin-top as needed */
+}
+
+.notice-form input[type="text"],
+.notice-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical; /* Allow vertical resizing of textarea */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.notice-form textarea {
+  min-height: 100px; /* Set minimum height for textarea */
+}
+
+.notice-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.notice-form button:hover {
+  background-color: #0056b3;
 }
 
 /* Feedback component styles */
@@ -127,13 +175,14 @@
 
 .chat-box {
   position: absolute;
-  bottom: 60px;
+  bottom: 80px;
   right: 0;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 300px;
+  height: 300px;
   padding: 20px;
   animation: slide-up 0.3s ease;
 }
@@ -272,6 +321,8 @@ ul > li {
   position: absolute; /* Position absolute */
   bottom: 0; /* Position at the bottom */
   left: 0; /* Align to the left */
+  /* border-radius: 20px; */
+  height: 80px;
 }
 
 /* Input Field */
@@ -279,8 +330,10 @@ ul > li {
   flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 20px;
   outline: none;
+  height: 40px;
+  width: 90%;
 }
 
 /* Send Button */
@@ -289,7 +342,7 @@ ul > li {
   background-color: #3498db;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 0px 20px 20px 0px;
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s ease;
@@ -297,4 +350,60 @@ ul > li {
 
 .chat-input button:hover {
   background-color: #2980b9;
+}
+.send-icon {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.send-icon:hover {
+  color: #0056b3;
+}
+
+/* Button Styling */
+.send-button {
+  background-color: transparent; /* Transparent background */
+  border: none; /* Remove border */
+  display: flex; /* Ensure the button expands to fit the icon */
+  align-items: center; /* Center the icon vertically */
+  padding: 0; /* Remove padding */
+}
+
+/* Adjust margin if needed */
+.send-button {
+  margin-right: 10px; /* Add some margin to the right */
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  color: black;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
 }

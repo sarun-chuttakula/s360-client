@@ -11,7 +11,12 @@ import ResultBoard from "./pages/ResultBoard";
 import AttendanceBoard from "./pages/AttendanceBoard";
 import Library from "./pages/Library";
 import Feedback from "./components/feedbackbox/feedback";
-function App() {
+import Layout from "./components/layout/Layout";
+import LoginScreen from "./pages/Login";
+import SignupScreen from "./pages/Signup";
+// import RequireAuth from "./components/required_auth/RequireAuth";
+// import { Role } from "./interfaces/Role";
+function Main() {
   return (
     <>
       {/* <Router> */}
@@ -23,16 +28,21 @@ function App() {
           </div>
           <div className="dashboard">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              {/* <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignupScreen />} /> */}
-              {/* <Route path="/notice-board" element={<NoticeBoard />} /> */}
-              <Route path="/groups" element={<GroupChat />} />
-              <Route path="/fee-board" element={<FeeBoard />} />
-              <Route path="/result-board" element={<ResultBoard />} />
-              <Route path="/attendance-board" element={<AttendanceBoard />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/" element={<Layout />}>
+                public routes
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/signup" element={<SignupScreen />} />
+                {/* we want to protect these routes */}
+                {/* <Route element={<RequireAuth allowedRoles={[Role.teacher]} />}> */}
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/groups" element={<GroupChat />} />
+                <Route path="/fee-board" element={<FeeBoard />} />
+                <Route path="/result-board" element={<ResultBoard />} />
+                <Route path="/attendance-board" element={<AttendanceBoard />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/feedback" element={<Feedback />} />
+              </Route>
+              {/* </Route> */}
             </Routes>
           </div>
         </div>
@@ -45,4 +55,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;

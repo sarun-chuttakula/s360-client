@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../api";
 import { ApiResponse } from "../interfaces/Auth";
+import AuthContext from "../context/AuthProvider"; // Import the AuthContext
 
 const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext); // Access setAuth from AuthContext
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -17,9 +20,14 @@ const LoginScreen: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response: ApiResponse = await Login(formData);
-    if (response.success) navigate("/dashboard");
-    else navigate("/login");
+    if (response.success) {
+      setAuth(response.data); // Update authentication data using setAuth
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
   };
+
   return (
     <div className="Login-container">
       <form className="Login-form" onSubmit={handleSubmit}>

@@ -1,17 +1,27 @@
-// import { useLocation, Navigate, Outlet } from "react-router-dom";
-// import useAuth from "../../hooks/useAuth";
+import { FC } from "react";
+import { useLocation, Navigate, Outlet } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { Role } from "../../interfaces/Role";
 
-// const RequireAuth = ({ allowedRoles }) => {
-//   const { auth } = useAuth();
-//   const location = useLocation();
+interface RequireAuthProps {
+  allowedRoles: Role[];
+}
 
-//   return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
-//     <Outlet />
-//   ) : auth?.user ? (
-//     <Navigate to="/unauthorized" state={{ from: location }} replace />
-//   ) : (
-//     <Navigate to="/login" state={{ from: location }} replace />
-//   );
-// };
+const RequireAuth: FC<RequireAuthProps> = ({ allowedRoles }) => {
+  const auth = useAuth();
+  const location = useLocation();
 
-// export default RequireAuth;
+  if (!auth) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  const { role } = auth;
+
+  return role && allowedRoles.includes(role) ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/unauthorized" state={{ from: location }} replace />
+  );
+};
+
+export default RequireAuth;

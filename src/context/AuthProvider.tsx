@@ -1,35 +1,60 @@
-// // AuthProvider.tsx
+import React, {
+  createContext,
+  useState,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { Role } from "../interfaces/Role";
 
-// import React, { createContext, useState, ReactNode } from "react";
-// import { AuthContextType, User } from "../interfaces/Auth";
+interface AuthData {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  created_by: string;
+  updated_by: string;
+  is_active: boolean;
+  email: string;
+  phone: string | null;
+  firstname: string;
+  lastname: string | null;
+  role: Role;
+  dob: string | null;
+  gender: string | null;
+  username: string;
+  password: string;
+  lastlogin: string;
+  profile_pic: string | null;
+  accesstoken: string;
+  refreshtoken: string;
+}
 
-// const AuthContext = createContext<AuthContextType | undefined>(undefined);
+interface ContextProps {
+  authData: AuthData | null;
+  setAuth: Dispatch<SetStateAction<AuthData | null>>;
+}
 
-// interface AuthProviderProps {
-//   children: ReactNode;
-// }
+const AuthContext = createContext<ContextProps>({
+  authData: null,
+  setAuth: () => null,
+});
 
-// const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-//   const [user, setUser] = useState<User | null>(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
-//   const login = (userData: User, accessToken: string, refreshToken: string) => {
-//     setUser(userData);
-//     // You may want to store tokens in localStorage or cookies for persistence
-//     // and handle token refresh logic
-//     console.log("User logged in:", userData);
-//   };
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [authData, setAuthData] = useState<AuthData | null>(null);
 
-//   const logout = () => {
-//     setUser(null);
-//     // Clear tokens from localStorage or cookies
-//     console.log("User logged out");
-//   };
+  const setAuth: ContextProps["setAuth"] = (data) => {
+    setAuthData(data);
+  };
 
-//   return (
-//     <AuthContext.Provider value={{ user, login, logout }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+  return (
+    <AuthContext.Provider value={{ authData, setAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-// export { AuthProvider, AuthContext };
+export default AuthContext;
