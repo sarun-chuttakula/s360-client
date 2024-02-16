@@ -5,7 +5,6 @@ import Dashboard from "./pages/Dashboard";
 // import SignupScreen from "./pages/Signup";
 import Sidebar from "./components/sidebar/sidebar";
 import { Route, Routes } from "react-router-dom";
-import NoticeBoard from "./pages/NoticeBoard";
 import GroupChat from "./pages/GroupChat";
 import FeeBoard from "./pages/FeeBoard";
 import ResultBoard from "./pages/ResultBoard";
@@ -27,7 +26,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               {/* <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignupScreen />} /> */}
-              <Route path="/notice-board" element={<NoticeBoard />} />
+              {/* <Route path="/notice-board" element={<NoticeBoard />} /> */}
               <Route path="/groups" element={<GroupChat />} />
               <Route path="/fee-board" element={<FeeBoard />} />
               <Route path="/result-board" element={<ResultBoard />} />
@@ -39,9 +38,6 @@ function App() {
         </div>
       </div>
       {/* </Router> */}
-      <div className="notice-container">
-        <NoticeBoard />
-      </div>
       <div className="feedback-container">
         <Feedback />
       </div>

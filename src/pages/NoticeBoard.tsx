@@ -15,7 +15,7 @@ const NoticeBoard: React.FC = () => {
       method: "GET",
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0OGM0MTlhLWQ2ODctNDcyNi05YWM4LTIzMWE0MzZjODkyMiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6ImM2OThjYWMxLTIyMTktNDg4MS05NGViLTBjMDdkZTNlZjZhZiIsImV4cCI6MTcwODAyODQ1NywidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODAyNDg1N30.lxo-Nhczcf6cCrkQ4eODH9Y1gMtzH-2zI_oUhTZoIY8",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0OGM0MTlhLWQ2ODctNDcyNi05YWM4LTIzMWE0MzZjODkyMiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjA2MzYxNDcxLWIyNzEtNGU3Yy05YWFmLWE0MWRlMzI0NGI2ZSIsImV4cCI6MTcwOTM1MDIzMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA1NDIzMX0.qhFym3whCKLhiotT7ruRLWM1VIDy0xM-STJrA9Zkxxs",
       },
     })
       .then((response) => response.json())

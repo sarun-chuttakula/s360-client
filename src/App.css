@@ -149,3 +149,146 @@
     transform: translateY(0);
   }
 }
+
+/* Library.css */
+
+/* Styles for folder and file icons */
+.folder-icon,
+.file-icon {
+  vertical-align: middle; /* Align icons vertically in the middle */
+  margin-right: 5px; /* Adjust spacing between icon and text */
+}
+.list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.icon {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Styles for folder and file names */
+.folder,
+.file {
+  display: flex; /* Use flexbox to align icon and text */
+  align-items: center; /* Align items vertically in the center */
+  margin-bottom: 5px; /* Adjust spacing between items as needed */
+}
+
+/* Styles for directory structure */
+ul {
+  list-style-type: none;
+  padding-left: 20px; /* Adjust indentation as needed */
+}
+
+ul > li {
+  margin-bottom: 5px; /* Adjust spacing between items as needed */
+}
+
+/* Animation for folder expansion */
+.folder-expand {
+  animation: expand 0.3s ease-in-out;
+}
+
+@keyframes expand {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Group Chat Container */
+.group-chat {
+  display: flex;
+  height: 80vh;
+}
+
+/* Group List Container */
+.group-list {
+  flex: 1;
+  background-color: #2c3e50; /* Dark blue */
+  padding: 20px;
+  border-radius: 5px 0 0 5px;
+}
+
+.group-list .text-xl {
+  font-size: 20px;
+  color: #fff; /* White */
+}
+
+.group-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.group-item {
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  color: #fff; /* White */
+}
+
+.group-item.active {
+  background-color: #34495e; /* Darker blue */
+}
+
+/* Chat Container */
+.chat-container {
+  flex: 3;
+  background-color: #ecf0f1; /* Light grey */
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.chat-header {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+/* Chat Messages */
+.chat-messages {
+  height: calc(100% - 60px); /* Adjust height according to chat input */
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+/* Chat Input */
+.chat-input {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  position: absolute; /* Position absolute */
+  bottom: 0; /* Position at the bottom */
+}
+
+/* Input Field */
+.chat-input input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Send Button */
+.chat-input button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+  background-color: #2980b9;
+}
