@@ -7,4 +7,4 @@ export const GROUP_API_URLS = `${BASE_API_URL}/group`;
 export const MESSAGE_API_URLS = `${BASE_API_URL}/message`;
 export const FINANCE_API_URLS = `${BASE_API_URL}/finance`;
 export const FEEDBACK_API_URLS = `${BASE_API_URL}/feedback`;
-export const NOTICE_BOARD_API_URLS = `${BASE_API_URL}/notice-board`;
+export const NOTICE_BOARD_API_URLS = `${BASE_API_URL}/noticeboard`;

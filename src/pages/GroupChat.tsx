@@ -10,7 +10,7 @@ import {
   GetAllMessages,
   GetGroups,
   SendMessage,
-} from "../api/group.api";
+} from "../api/group-chat.api";
 const GroupChat = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);

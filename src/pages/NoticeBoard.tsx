@@ -1,5 +1,9 @@
+import { get } from "http";
 import React, { useState, useEffect } from "react";
-
+import { MdDelete } from "react-icons/md";
+import { DeleteNotice, GetNotices } from "../api/notice-board.api";
+import { ApiResponse } from "../interfaces";
+import { send } from "process";
 interface Notice {
   id: string;
   title: string;
@@ -33,14 +37,7 @@ const NoticeBoard: React.FC = () => {
   };
 
   const fetchNotices = () => {
-    fetch("http://localhost:5001/noticeBoard/", {
-      method: "GET",
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5YmFiZGUwLTk5OWYtNGZhMi05Zjc2LTQ4YTVmOThmOTcwMCIsInJvbGUiOiJzdHVkZW50IiwidXVpZCI6ImMzNjE2YzdmLWYwZmYtNDE3Yi1hYzgwLTk3ZTFhMzFjNWRhMSIsImV4cCI6MTcwOTM4ODcxNiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5MjcxNn0.x75rPcx2pSf9nvBqNdQ3N6ncvO43sRyoaoKWWqIbk_Y",
-      },
-    })
-      .then((response) => response.json())
+    GetNotices()
       .then((data) => {
         setNotices(data.data);
       })
@@ -71,6 +68,21 @@ const NoticeBoard: React.FC = () => {
 
   const handleNewNoticeClick = () => {
     setShowForm(!showForm); // Toggle the visibility of the form
+  };
+
+  const handleDeleteNotice = (noticeId: string) => {
+    DeleteNotice(noticeId)
+      .then((data: ApiResponse) => {
+        if (data.success) {
+          console.log("Group deleted successfully:", data.data);
+          // Fetch updated group list after deleting the group
+        } else {
+          console.error("Failed to delete group:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting group:", error);
+      });
   };
 
   return (
@@ -113,6 +125,13 @@ const NoticeBoard: React.FC = () => {
               {notice.image && (
                 <img src={notice.image} alt="Notice" className="notice-image" />
               )}
+              {userRole === "teacher" || userRole === "admin" ? (
+                <MdDelete
+                  className="delete-notice"
+                  size={20}
+                  onClick={() => handleDeleteNotice(notice.id)}
+                />
+              ) : null}
             </li>
           ))}
         </ul>
