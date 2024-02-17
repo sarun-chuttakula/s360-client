@@ -3,7 +3,14 @@ import { Group, ApiResponse } from "../interfaces";
 import GroupForm, { GroupData } from "../components/GroupForm/GroupForm";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { IoSend } from "react-icons/io5";
-
+import { MdDelete } from "react-icons/md";
+import {
+  CreateGroup,
+  DeleteGroup,
+  GetAllMessages,
+  GetGroups,
+  SendMessage,
+} from "../api/group.api";
 const GroupChat = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
@@ -18,17 +25,7 @@ const GroupChat = () => {
   useEffect(() => {
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
-    fetch("http://localhost:5001/group/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch group data");
-        }
-        return response.json();
-      })
+    GetGroups()
       .then((data: ApiResponse) => {
         if (data.success) {
           setGroups(data.data);
@@ -86,17 +83,7 @@ const GroupChat = () => {
   }, [reachedFirstMessage]);
 
   const fetchMessages = (groupId: string, token: string, page: number) => {
-    fetch(`http://localhost:5001/message/?groupId=${groupId}&page=${page}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch messages");
-        }
-        return response.json();
-      })
+    GetAllMessages(groupId, page)
       .then((data: ApiResponse) => {
         if (data.success) {
           if (currentPage === 1) {
@@ -146,25 +133,13 @@ const GroupChat = () => {
   const sendMessage = () => {
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
-    fetch("http://localhost:5001/message/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        sender: "message",
-        receiver: "message",
-        message: messageInput,
-        group: selectedGroup?.id,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to send message");
-        }
-        return response.json();
-      })
+    const messageData = {
+      sender: "senderId",
+      receiver: "receiverId",
+      group: selectedGroup?.id,
+      message: messageInput,
+    };
+    SendMessage(messageData)
       .then((data: ApiResponse) => {
         if (data.success) {
           setMessages([...messages, data.data]);
@@ -182,20 +157,7 @@ const GroupChat = () => {
     console.log("Adding group:", groupData);
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
-    fetch("http://localhost:5001/group/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(groupData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to add group");
-        }
-        return response.json();
-      })
+    CreateGroup(groupData)
       .then((data: ApiResponse) => {
         if (data.success) {
           console.log("Group added successfully:", data.data);
@@ -214,18 +176,7 @@ const GroupChat = () => {
     console.log("Deleting group:", groupId);
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
-    fetch(`http://localhost:5001/group/${groupId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to delete group");
-        }
-        return response.json();
-      })
+    DeleteGroup(groupId)
       .then((data: ApiResponse) => {
         if (data.success) {
           console.log("Group deleted successfully:", data.data);
@@ -282,7 +233,18 @@ const GroupChat = () => {
         {/* <div className="chat-content"> */}
         {selectedGroup ? (
           <div>
-            <h2 className="chat-header">{selectedGroup.name}</h2>
+            <div className="chat-header">
+              <h2>{selectedGroup.name}</h2>
+              <div className="delete-group">
+                {userRole === "teacher" || userRole === "admin" ? (
+                  <MdDelete
+                    className="delete-group-icon"
+                    size={30}
+                    onClick={() => handleDeleteGroup(selectedGroup.id)}
+                  />
+                ) : null}
+              </div>
+            </div>
             <div className="chat-content">
               <div className="chat-messages">
                 {messages.map((msg, index) => (
