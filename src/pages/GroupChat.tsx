@@ -131,8 +131,6 @@ const GroupChat = () => {
   };
 
   const sendMessage = () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
     const messageData = {
       sender: "senderId",
       receiver: "receiverId",
@@ -155,8 +153,6 @@ const GroupChat = () => {
 
   const handleAddGroup = (groupData: GroupData) => {
     console.log("Adding group:", groupData);
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
     CreateGroup(groupData)
       .then((data: ApiResponse) => {
         if (data.success) {
@@ -174,8 +170,6 @@ const GroupChat = () => {
 
   const handleDeleteGroup = (groupId: string) => {
     console.log("Deleting group:", groupId);
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
     DeleteGroup(groupId)
       .then((data: ApiResponse) => {
         if (data.success) {

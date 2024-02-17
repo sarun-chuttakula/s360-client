@@ -1,9 +1,10 @@
 import { ApiResponse } from "../interfaces";
 import { NOTICE_BOARD_API_URLS } from "./api-resource";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
-export const SendNotice = async (data: any): Promise<ApiResponse> => {
+export const SendNotice = async (
+  data: any,
+  token: string
+): Promise<ApiResponse> => {
   try {
     const response = await fetch(NOTICE_BOARD_API_URLS, {
       method: "POST",
@@ -29,7 +30,7 @@ export const SendNotice = async (data: any): Promise<ApiResponse> => {
   }
 };
 
-export const GetNotices = async () => {
+export const GetNotices = async (token: string) => {
   try {
     const response = await fetch(NOTICE_BOARD_API_URLS, {
       method: "GET",
@@ -50,7 +51,7 @@ export const GetNotices = async () => {
   }
 };
 
-export const GetNotice = async (noticeId: string) => {
+export const GetNotice = async (noticeId: string, token: string) => {
   try {
     const response = await fetch(`${NOTICE_BOARD_API_URLS}/${noticeId}`, {
       method: "GET",
@@ -71,7 +72,11 @@ export const GetNotice = async (noticeId: string) => {
   }
 };
 
-export const UpdateNotice = async (noticeId: string, data: any) => {
+export const UpdateNotice = async (
+  noticeId: string,
+  data: any,
+  token: string
+) => {
   try {
     const response = await fetch(`${NOTICE_BOARD_API_URLS}/${noticeId}`, {
       method: "PUT",
@@ -93,7 +98,7 @@ export const UpdateNotice = async (noticeId: string, data: any) => {
   }
 };
 
-export const DeleteNotice = async (noticeId: string) => {
+export const DeleteNotice = async (noticeId: string, token: string) => {
   try {
     const response = await fetch(
       `${NOTICE_BOARD_API_URLS}/?noticeId=${noticeId}`,

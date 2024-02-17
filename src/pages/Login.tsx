@@ -2,11 +2,11 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../api";
 import { ApiResponse } from "../interfaces/Auth";
-import AuthContext from "../context/AuthProvider"; // Import the AuthContext
+import AuthContext from "../context/AuthProvider";
 
 const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext); // Access setAuth from AuthContext
+  const { setAuth } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -21,7 +21,11 @@ const LoginScreen: React.FC = () => {
     e.preventDefault();
     const response: ApiResponse = await Login(formData);
     if (response.success) {
-      setAuth(response.data); // Update authentication data using setAuth
+      // Store token in local storage
+      // console.log("Response:", response.data);
+      console.log("Token:", response.data.accesstoken);
+      localStorage.setItem("token", response.data.accesstoken);
+      setAuth(response.data);
       navigate("/");
     } else {
       navigate("/login");

@@ -1,6 +1,8 @@
+// AuthProvider.js
 import React, {
   createContext,
   useState,
+  useEffect,
   ReactNode,
   Dispatch,
   SetStateAction,
@@ -44,8 +46,14 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [authData, setAuthData] = useState<AuthData | null>(null);
+  const [authData, setAuthData] = useState<AuthData | null>(() => {
+    const storedAuthData = localStorage.getItem("authData");
+    return storedAuthData ? JSON.parse(storedAuthData) : null;
+  });
 
+  useEffect(() => {
+    localStorage.setItem("authData", JSON.stringify(authData));
+  }, [authData]);
   const setAuth: ContextProps["setAuth"] = (data) => {
     setAuthData(data);
   };

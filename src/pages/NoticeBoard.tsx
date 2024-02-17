@@ -1,9 +1,8 @@
-import { get } from "http";
 import React, { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { DeleteNotice, GetNotices } from "../api/notice-board.api";
 import { ApiResponse } from "../interfaces";
-import { send } from "process";
+import useAuth from "../hooks/useAuth";
 interface Notice {
   id: string;
   title: string;
@@ -12,15 +11,14 @@ interface Notice {
 }
 
 const NoticeBoard: React.FC = () => {
+  const auth = useAuth();
   const [notices, setNotices] = useState<Notice[]>([]);
   const [showForm, setShowForm] = useState(false); // State to control the visibility of the form
   const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE";
     fetchNotices();
-    const decodedToken: any = decodeJwtToken(token);
+    const decodedToken: any = decodeJwtToken(auth?.accesstoken as string);
     if (decodedToken) {
       setUserRole(decodedToken.role);
     }
@@ -37,7 +35,7 @@ const NoticeBoard: React.FC = () => {
   };
 
   const fetchNotices = () => {
-    GetNotices()
+    GetNotices(auth?.accesstoken as string)
       .then((data) => {
         setNotices(data.data);
       })
@@ -52,8 +50,7 @@ const NoticeBoard: React.FC = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjE2ZTRjMDgxLWUxMGEtNGI1Zi1hMDhjLTM3NzA1OTM1NWFlOCIsImV4cCI6MTcwOTM4OTYzOSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5MzYzOX0.g5ozLAsUBHVT22TkNMWqTANod7NyUwWSG9EINNl7K5E",
+        Authorization: `Bearer ${auth?.accesstoken}` as string,
       },
       body: JSON.stringify(formData),
     })
@@ -71,7 +68,7 @@ const NoticeBoard: React.FC = () => {
   };
 
   const handleDeleteNotice = (noticeId: string) => {
-    DeleteNotice(noticeId)
+    DeleteNotice(noticeId, auth?.accesstoken as string)
       .then((data: ApiResponse) => {
         if (data.success) {
           console.log("Group deleted successfully:", data.data);
