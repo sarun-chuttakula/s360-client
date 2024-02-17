@@ -34,11 +34,13 @@ interface AuthData {
 interface ContextProps {
   authData: AuthData | null;
   setAuth: Dispatch<SetStateAction<AuthData | null>>;
+  logout: () => void; // Include logout function in ContextProps
 }
 
 const AuthContext = createContext<ContextProps>({
   authData: null,
   setAuth: () => null,
+  logout: () => null, // Provide a default implementation for logout
 });
 
 interface AuthProviderProps {
@@ -54,12 +56,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("authData", JSON.stringify(authData));
   }, [authData]);
+
+  const logout = () => {
+    localStorage.removeItem("authData");
+    setAuthData(null);
+  };
+
   const setAuth: ContextProps["setAuth"] = (data) => {
     setAuthData(data);
   };
 
   return (
-    <AuthContext.Provider value={{ authData, setAuth }}>
+    <AuthContext.Provider value={{ authData, setAuth, logout }}>
       {children}
     </AuthContext.Provider>
   );

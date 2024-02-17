@@ -73,6 +73,33 @@ a:hover {
   text-decoration: underline;
 }
 
+.logout-button {
+  position: fixed; /* Change to fixed position */
+  top: 10px;
+  right: 10px;
+  z-index: 999; /* Ensure it's above other content */
+  padding: 8px 16px;
+  background-color: #007bff;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100px;
+}
+
+.logout-button:hover {
+  background-color: #f0f0f0;
+}
+/*Missing pages*/
+/* .missing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
+.missing-page {
+  padding: "100px";
+}
 /* App container styles */
 .app-container {
   height: 100vh;

@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard";
 // import LoginScreen from "./pages/Login";
 // import SignupScreen from "./pages/Signup";
 import Sidebar from "./components/sidebar/sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import GroupChat from "./pages/GroupChat";
 import FeeBoard from "./pages/FeeBoard";
 import ResultBoard from "./pages/ResultBoard";
@@ -18,6 +18,8 @@ import RequireAuth from "./components/required_auth/RequireAuth";
 import { Role } from "./interfaces/Role";
 import useAuth from "./hooks/useAuth";
 import Unauthorized from "./components/unauthorized/Unauthorized";
+import LogoutButton from "./components/logout/logout";
+import Missing from "./components/Missing";
 function Main() {
   //only render sidebar when user is logged in
   const auth = useAuth();
@@ -34,12 +36,28 @@ function Main() {
             </div>
           ) : null}
           <div className="dashboard">
+            {auth ? (
+              <div className="logout-button">
+                <LogoutButton />
+              </div>
+            ) : null}
             <Routes>
               <Route path="/" element={<Layout />}>
                 {/* public routes */}
                 <Route path="/login" element={<LoginScreen />} />
                 <Route path="/signup" element={<SignupScreen />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route
+                  element={
+                    auth ? (
+                      <RequireAuth
+                        allowedRoles={[Role.teacher, Role.student]}
+                      />
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                ></Route>
                 {/* we want to protect these routes */}
                 <Route
                   element={
@@ -57,6 +75,7 @@ function Main() {
                   <Route path="/library" element={<Library />} />
                   <Route path="/feedback" element={<Feedback />} />
                 </Route>
+                <Route path="*" element={<Missing />} />
               </Route>
             </Routes>
           </div>

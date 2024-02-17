@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"; // Import useDispatch hook
+import { login } from "../redux/actions/userActions"; // Import the login action
 import { Login } from "../api";
 import { ApiResponse } from "../interfaces/Auth";
 import AuthContext from "../context/AuthProvider";
@@ -7,10 +9,16 @@ import AuthContext from "../context/AuthProvider";
 const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
+  const dispatch = useDispatch(); // Initialize useDispatch hook
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  const userData = useSelector((state: any) => state.user.userData);
+  const isAuthenticated = useSelector(
+    (state: any) => state.user.isAuthenticated
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,16 +29,19 @@ const LoginScreen: React.FC = () => {
     e.preventDefault();
     const response: ApiResponse = await Login(formData);
     if (response.success) {
-      // Store token in local storage
-      // console.log("Response:", response.data);
       console.log("Token:", response.data.accesstoken);
       localStorage.setItem("token", response.data.accesstoken);
       setAuth(response.data);
+      const userData = response.data;
+      console.log("User Data1:", userData);
+      // Dispatch the login action with user data
+      dispatch(login(userData));
       navigate("/");
     } else {
       navigate("/login");
     }
   };
+  console.log("User Data:", userData);
 
   return (
     <div className="Login-container">
