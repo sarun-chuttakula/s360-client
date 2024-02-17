@@ -262,6 +262,7 @@ ul > li {
   background-color: #2c3e50; /* Dark blue */
   padding: 20px;
   border-radius: 5px 0 0 5px;
+  position: fixed;
 }
 
 .group-list .text-xl {
@@ -350,7 +351,21 @@ ul > li {
   flex: 3;
   background-color: #ecf0f1; /* Light grey */
   padding: 20px;
-  border-left: 1px solid #ddd;
+  /* border-left: 1px solid #ddd; */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chat-content {
+  position: relative; /* Make the container position relative */
+  flex: 3;
+  background-color: #ecf0f1; /* Light grey */
+  padding: 5px;
+  /* border-left: 1px solid #ddd; */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 600px;
 }
 
 .chat-header {
@@ -364,7 +379,7 @@ ul > li {
 
 /* Chat Messages */
 .chat-messages {
-  height: calc(100% - 110px); /* Adjust height according to chat input */
+  height: calc(100% - 110px);
   overflow-y: auto;
   margin-bottom: 20px;
 }
@@ -377,11 +392,10 @@ ul > li {
   border-top: 1px solid #ddd;
   display: flex;
   align-items: center;
-  position: absolute; /* Position absolute */
-  bottom: 0; /* Position at the bottom */
-  left: 0; /* Align to the left */
-  /* border-radius: 20px; */
-  height: 80px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 70px;
 }
 
 /* Input Field */
@@ -391,7 +405,7 @@ ul > li {
   border: 1px solid #ddd;
   border-radius: 20px;
   outline: none;
-  height: 40px;
+  height: 35px;
   width: 90%;
 }
 

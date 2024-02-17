@@ -210,6 +210,35 @@ const GroupChat = () => {
       });
   };
 
+  const handleDeleteGroup = (groupId: string) => {
+    console.log("Deleting group:", groupId);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
+    fetch(`http://localhost:5001/group/${groupId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete group");
+        }
+        return response.json();
+      })
+      .then((data: ApiResponse) => {
+        if (data.success) {
+          console.log("Group deleted successfully:", data.data);
+          // Fetch updated group list after deleting the group
+        } else {
+          console.error("Failed to delete group:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting group:", error);
+      });
+  };
+
   const handleCloseForm = () => {
     setShowForm(false);
   };
@@ -250,13 +279,16 @@ const GroupChat = () => {
       </div>
 
       <div className="chat-container" ref={chatContainerRef}>
+        {/* <div className="chat-content"> */}
         {selectedGroup ? (
           <div>
             <h2 className="chat-header">{selectedGroup.name}</h2>
-            <div className="chat-messages">
-              {messages.map((msg, index) => (
-                <div key={index}>{msg.message}</div>
-              ))}
+            <div className="chat-content">
+              <div className="chat-messages">
+                {messages.map((msg, index) => (
+                  <div key={index}>{msg.message}</div>
+                ))}
+              </div>
             </div>
             <div className="chat-input">
               <input
@@ -277,6 +309,7 @@ const GroupChat = () => {
           <div className="text-center">Select a group to start chatting</div>
         )}
       </div>
+      {/* </div> */}
     </div>
   );
 };
