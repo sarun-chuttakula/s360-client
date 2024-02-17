@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import useAuth from "../hooks/useAuth";
 
 // Define the interface for the response data
 interface FeeDetailsData {
@@ -9,6 +11,8 @@ interface FeeDetailsData {
 const FeeBoard = () => {
   const [feeDetails, setFeeDetails] = useState<FeeDetailsData[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const auth = useAuth();
+  const userData = useSelector((state: any) => state.user.userData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,8 +21,7 @@ const FeeBoard = () => {
           "http://localhost:5001/feedetails?id=student",
           {
             headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE",
+              Authorization: `Bearer ${auth?.accesstoken}`,
             },
           }
         );

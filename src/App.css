@@ -137,14 +137,15 @@ a:hover {
 }
 
 .side-bar a {
-  display: block;
+  display: flex; /* Change display to flex */
+  align-items: center; /* Align items vertically */
   color: #fff;
   text-decoration: none;
   padding: 10px 20px;
 }
 
-.side-bar a:hover {
-  background-color: #555;
+.side-bar a svg {
+  margin-right: 10px; /* Adjust the spacing between icon and text */
 }
 
 .dashboard {

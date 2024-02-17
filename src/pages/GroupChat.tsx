@@ -26,6 +26,15 @@ const GroupChat = () => {
   const auth = useAuth();
   const token = auth?.accesstoken as string;
   const userData = useSelector((state: any) => state.user.userData);
+  // Load selected group from sessionStorage on component mount
+  useEffect(() => {
+    const storedSelectedGroup = JSON.parse(
+      sessionStorage.getItem("selectedGroup") || "null"
+    );
+    if (storedSelectedGroup) {
+      setSelectedGroup(storedSelectedGroup);
+    }
+  }, []);
   useEffect(() => {
     GetGroups()
       .then((data: ApiResponse) => {
@@ -46,29 +55,31 @@ const GroupChat = () => {
       fetchMessages(selectedGroup.id, token, currentPage);
     }
   }, [selectedGroup, currentPage]);
-
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        chatContainerRef.current &&
-        chatContainerRef.current.scrollTop === 0 &&
-        !reachedFirstMessage
-      ) {
-        fetchPreviousMessages();
-      }
-    };
-
-    if (chatContainerRef.current) {
-      chatContainerRef.current.addEventListener("scroll", handleScroll);
-    }
-
+    // Store scroll position in sessionStorage when component unmounts
     return () => {
       if (chatContainerRef.current) {
-        chatContainerRef.current.removeEventListener("scroll", handleScroll);
+        sessionStorage.setItem(
+          "chatScrollPosition",
+          chatContainerRef.current.scrollTop.toString()
+        );
       }
     };
-  }, [reachedFirstMessage]);
+  }, []);
 
+  useEffect(() => {
+    // Restore scroll position from sessionStorage when component mounts
+    if (chatContainerRef.current) {
+      const storedScrollPosition = sessionStorage.getItem("chatScrollPosition");
+      if (storedScrollPosition) {
+        chatContainerRef.current.scrollTop = parseInt(storedScrollPosition);
+      } else {
+        // If no scroll position is stored, scroll to the bottom
+        chatContainerRef.current.scrollTop =
+          chatContainerRef.current.scrollHeight;
+      }
+    }
+  }, []);
   const fetchMessages = (groupId: string, token: string, page: number) => {
     GetAllMessages(groupId, page)
       .then((data: ApiResponse) => {
@@ -99,6 +110,8 @@ const GroupChat = () => {
     setSelectedGroup(group);
     setCurrentPage(1);
     setReachedFirstMessage(false);
+    // Store selected group in sessionStorage
+    sessionStorage.setItem("selectedGroup", JSON.stringify(group));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
