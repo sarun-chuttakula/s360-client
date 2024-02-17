@@ -11,6 +11,8 @@ import {
   GetGroups,
   SendMessage,
 } from "../api/group-chat.api";
+import useAuth from "../hooks/useAuth";
+import { useSelector } from "react-redux";
 const GroupChat = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
@@ -21,10 +23,10 @@ const GroupChat = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
-
+  const auth = useAuth();
+  const token = auth?.accesstoken as string;
+  const userData = useSelector((state: any) => state.user.userData);
   useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
     GetGroups()
       .then((data: ApiResponse) => {
         if (data.success) {
@@ -36,26 +38,11 @@ const GroupChat = () => {
       .catch((error) => {
         console.error("Error fetching group data:", error);
       });
-    const decodedToken: any = decodeJwtToken(token);
-    if (decodedToken) {
-      setUserRole(decodedToken.role);
-    }
+    setUserRole(userData.role);
   }, []);
-
-  const decodeJwtToken = (token: string) => {
-    try {
-      const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      return decodedToken;
-    } catch (error) {
-      console.error("Error decoding JWT token:", error);
-      return null;
-    }
-  };
 
   useEffect(() => {
     if (selectedGroup) {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjRmOWFhNzU3LTU5M2QtNDJjZC05OTRkLWU4NzNmMzliMDU3ZCIsImV4cCI6MTcwOTM5NDk3NiwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA5ODk3Nn0.kyBnZnIwtUsVbag6n6--Tvw_EE0pXAW_92IaJEmc2QQ";
       fetchMessages(selectedGroup.id, token, currentPage);
     }
   }, [selectedGroup, currentPage]);
