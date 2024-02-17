@@ -605,3 +605,40 @@ td {
 th {
   background-color: #f2f2f2;
 }
+
+/*Profile css*/
+.profile-dropdown {
+  position: relative;
+  z-index: 999;
+}
+
+.profile-icon {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  list-style-type: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 0;
+  display: none;
+}
+
+.dropdown-menu li {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+  display: block;
+}

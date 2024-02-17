@@ -18,29 +18,12 @@ import RequireAuth from "./components/required_auth/RequireAuth";
 import { Role } from "./interfaces/Role";
 import useAuth from "./hooks/useAuth";
 import Unauthorized from "./components/unauthorized/Unauthorized";
-import LogoutButton from "./components/logout/logout";
 import Missing from "./components/Missing";
-import { useSelector } from "react-redux";
-import boyPhoto from "../public/assets/icons/2784403.png";
+import ProfileDropdown from "./components/dropdown/ProfileDropDown";
 function Main() {
   //only render sidebar when user is logged in
   const auth = useAuth();
-  const userData = useSelector((state: any) => state.user.userData);
-  let imagebygender, boyPhoto, girlPhoto;
-  if (auth) {
-    console.log("User Data:", userData);
-    const isTeacher = userData.role === "teacher";
-    // const isStudent = userData.role === "student";
-    // const isAdmin = userData.role === "admin";
 
-    boyPhoto = isTeacher
-      ? "images/male_teacher.png"
-      : "images/male_student.png";
-    girlPhoto = isTeacher
-      ? "images/female_teacher.png"
-      : "images/female_student.png";
-    imagebygender = userData.gender === "male" ? boyPhoto : girlPhoto;
-  }
   return (
     <>
       {/* <Router> */}
@@ -56,10 +39,7 @@ function Main() {
             {auth ? (
               <div className="top-bar">
                 <div className="profile-icon">
-                  <img
-                    src={userData.profile_pic || imagebygender}
-                    alt="Profile"
-                  />
+                  <ProfileDropdown />
                 </div>
               </div>
             ) : null}
