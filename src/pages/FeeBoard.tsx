@@ -38,7 +38,7 @@ const FeeBoard = () => {
     <div className="m-3">
       <h2 className="text-xl text-gray-900 font-semibold">FeeBoard</h2>
       {error && <div>Error: {error}</div>}
-      {feeDetails.length > 0 && (
+      {feeDetails.length > 0 ? (
         <table className="border-collapse border border-gray-400">
           <thead>
             <tr>
@@ -69,6 +69,8 @@ const FeeBoard = () => {
             ))}
           </tbody>
         </table>
+      ) : (
+        <div>No fee details available.</div>
       )}
     </div>
   );

@@ -16,6 +16,12 @@ const RequireAuth: FC<RequireAuthProps> = ({ allowedRoles }) => {
   }
 
   const { role } = auth;
+  if (
+    (role && location.pathname === "/login") ||
+    location.pathname === "/signup"
+  ) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return role && allowedRoles.includes(role) ? (
     <Outlet />

@@ -10,14 +10,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
 }
 
 .Login-form {
-  width: 300px;
-  padding: 20px;
+  width: 400px; /* Adjust width as needed */
+  padding: 30px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: #f9f9f9;
 }
 
@@ -27,25 +27,33 @@
 
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff; /* Change color on focus */
 }
 
 button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
+  margin-top: 10px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: #007bff;
   color: #fff;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -61,7 +69,7 @@ button:hover {
 }
 
 p {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 a {
@@ -164,8 +172,50 @@ a:hover {
   animation: fade-in 0.5s ease-in-out;
   position: relative;
   border: #000000 solid 1px;
+  z-index: 1; /* Ensure it's above other content */
 }
 
+/* Add button styles */
+.add-notice-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 20px; /* Adjust position from top */
+  right: 20px; /* Adjust position from right */
+  z-index: 2; /* Ensure it's above other content */
+}
+
+/* Animation for NoticeBoard */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation for NoticeItem */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 .notice-list {
   list-style-type: none;
   padding: 0;
@@ -265,7 +315,7 @@ a:hover {
 
 /* Feedback component styles */
 .feedback {
-  position: absolute;
+  position: fixed; /* Change to fixed position */
   bottom: 20px;
   right: 20px;
   z-index: 102;
@@ -282,24 +332,24 @@ a:hover {
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 103;
+}
+
+.feedback-icon:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 .chat-box {
-  position: absolute;
+  position: fixed; /* Change to fixed position */
   bottom: 80px;
-  right: 0;
+  right: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 300px;
-  height: 300px;
   padding: 20px;
   animation: slide-up 0.3s ease;
+  z-index: 103;
 }
 
 /* Additional styles for animation */
@@ -312,6 +362,45 @@ a:hover {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.chat-box h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.chat-box form input,
+.chat-box form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.chat-box form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-box form button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.feedback-status {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #333; /* Dark grey text */
 }
 
 /* Library.css */
@@ -400,6 +489,7 @@ ul > li {
 }
 
 .group-item.active {
+  border-radius: 20px;
   background-color: #34495e; /* Darker blue */
 }
 .group-list {
@@ -651,12 +741,16 @@ th {
 
 .attendance-board h1 {
   color: #333;
+  font-size: 25px;
+  margin-bottom: 30px;
+  margin-left: 100px;
 }
 
 .attendance-board table {
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  margin-left: 100px;
 }
 
 .attendance-board th,
@@ -673,4 +767,59 @@ th {
 .attendance-board .mark-attendance-checkbox {
   margin: 0;
   padding: 0;
+}
+
+.attendance-board button {
+  margin: 0px 300px;
+  width: 500px;
+}
+
+/* Dashboard CSS */
+
+/* Main container */
+.main {
+  display: flex;
+  position: relative;
+}
+
+/* Dashboard container */
+.dashboard {
+  flex: 1;
+  padding: 20px;
+}
+/* Classes Container Styles */
+.classes {
+  margin-right: 10px;
+  padding: 20px;
+  /* border: 1px solid #000000; */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.classes h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.classes ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.classes li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+  animation: slide-in 0.5s ease-in-out;
+}
+
+.classes li:last-child {
+  border-bottom: none;
+}
+
+.classes li:hover {
+  background-color: #f5f5f5;
 }

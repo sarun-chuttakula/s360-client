@@ -79,7 +79,6 @@ const GroupChat = () => {
       }
     }
   }, []);
-  //delete session storage when user logs out
   useEffect(() => {
     if (!auth) {
       sessionStorage.removeItem("selectedGroup");

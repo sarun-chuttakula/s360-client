@@ -6,8 +6,10 @@ import { GiCash } from "react-icons/gi";
 import { GiRank3 } from "react-icons/gi";
 import { AiFillCarryOut } from "react-icons/ai";
 import { IoLibraryOutline } from "react-icons/io5";
+import useAuth from "../../hooks/useAuth";
 
 const Sidebar = () => {
+  const auth = useAuth();
   return (
     <div className="side-bar">
       <Link to="/">
@@ -26,10 +28,12 @@ const Sidebar = () => {
         <GiRank3 />
         <span>ResultBoard</span>
       </Link>
-      <Link to="/attendance-board">
-        <AiFillCarryOut />
-        <span>AttendanceBoard</span>
-      </Link>
+      {auth?.role === "teacher" ? (
+        <Link to="/attendance-board">
+          <AiFillCarryOut />
+          <span>AttendanceBoard</span>
+        </Link>
+      ) : null}
       <Link to="/library">
         <IoLibraryOutline />
         <span>library</span>

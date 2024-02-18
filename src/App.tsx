@@ -46,7 +46,14 @@ function Main() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 {/* public routes */}
-                <Route path="/login" element={<LoginScreen />} />
+                <Route
+                  path="/login"
+                  element={auth ? <Navigate to="/" /> : <LoginScreen />}
+                />
+                <Route
+                  path="*"
+                  element={!auth ? <Navigate to="/login" /> : <Missing />}
+                />
                 <Route path="/signup" element={<SignupScreen />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
                 <Route
@@ -70,14 +77,16 @@ function Main() {
                   <Route path="/groups" element={<GroupChat />} />
                   <Route path="/fee-board" element={<FeeBoard />} />
                   <Route path="/result-board" element={<ResultBoard />} />
+
+                  <Route path="/library" element={<Library />} />
+                  <Route path="/feedback" element={<Feedback />} />
+                </Route>
+                <Route element={<RequireAuth allowedRoles={[Role.teacher]} />}>
                   <Route
                     path="/attendance-board"
                     element={<AttendanceBoard />}
                   />
-                  <Route path="/library" element={<Library />} />
-                  <Route path="/feedback" element={<Feedback />} />
                 </Route>
-                <Route path="*" element={<Missing />} />
               </Route>
             </Routes>
           </div>

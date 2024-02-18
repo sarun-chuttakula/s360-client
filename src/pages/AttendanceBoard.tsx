@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getStudentsAttendance, markAttendance } from "../api/attendance.api";
 import useAuth from "../hooks/useAuth";
+
 const AttendanceBoard: React.FC = () => {
   const auth = useAuth();
   const [students, setStudents] = useState<any[]>([]);
   const [attendanceStatus, setAttendanceStatus] = useState<any>({});
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -21,6 +23,7 @@ const AttendanceBoard: React.FC = () => {
     };
     fetchStudents();
   }, []);
+
   const handleMarkAttendance = async () => {
     try {
       const studentsToMarkAttendance = students.map((student) => ({
@@ -32,14 +35,16 @@ const AttendanceBoard: React.FC = () => {
       console.error("Error marking attendance:", error);
     }
   };
+
   const handleCheckboxChange = (studentId: string) => {
     setAttendanceStatus((prevStatus: any) => ({
       ...prevStatus,
       [studentId]: prevStatus[studentId] === "PRESENT" ? "ABSENT" : "PRESENT",
     }));
   };
+
   return (
-    <div>
+    <div className="attendance-board">
       <h1>Attendance Board</h1>
       <table>
         <thead>
@@ -60,6 +65,7 @@ const AttendanceBoard: React.FC = () => {
               <td>{student.lastname}</td>
               <td>
                 <input
+                  className="mark-attendance-checkbox"
                   type="checkbox"
                   checked={attendanceStatus[student.id]}
                   placeholder="Mark Attendance"
@@ -74,4 +80,5 @@ const AttendanceBoard: React.FC = () => {
     </div>
   );
 };
+
 export default AttendanceBoard;

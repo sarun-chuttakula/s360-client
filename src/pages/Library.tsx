@@ -11,7 +11,7 @@ export default function Library() {
 
   useEffect(() => {
     // Fetch directory structure from the API
-    fetch("http://localhost:5001/library/getdirectories", {
+    fetch("http://localhost:5001/library/getstructure", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

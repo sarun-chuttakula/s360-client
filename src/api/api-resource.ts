@@ -9,3 +9,4 @@ export const FINANCE_API_URLS = `${BASE_API_URL}/finance`;
 export const FEEDBACK_API_URLS = `${BASE_API_URL}/feedback`;
 export const NOTICE_BOARD_API_URLS = `${BASE_API_URL}/noticeboard`;
 export const ATTENDANCE_API_URLS = `${BASE_API_URL}/attendance`;
+export const CLASSES_API_URLS = `${BASE_API_URL}/class`;
