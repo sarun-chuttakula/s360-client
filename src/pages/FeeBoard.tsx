@@ -59,7 +59,11 @@ const FeeBoard = () => {
                 <td className="border border-gray-400 px-4 py-2">
                   {transaction.transaction_id}
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td
+                  className={`border border-gray-400 px-4 py-2 ${
+                    transaction.is_paid ? "text-green-600" : "text-red-600"
+                  }`}
+                >
                   {transaction.is_paid ? "Paid" : "Not Paid"}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">

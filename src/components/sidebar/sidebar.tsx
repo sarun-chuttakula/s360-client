@@ -20,9 +20,9 @@ const Sidebar = () => {
         <LuMessagesSquare />
         <span>Groups</span>
       </Link>
-      <Link to="/fee-board">
+      <Link to="/fee-details">
         <GiCash />
-        <span>FeeBoard</span>
+        <span>Financial Details</span>
       </Link>
       <Link to="/result-board">
         <GiRank3 />

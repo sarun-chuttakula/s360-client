@@ -154,7 +154,21 @@ const GroupChat = () => {
         if (data.success) {
           console.log("Group added successfully:", data.data);
           // Fetch updated group list after adding the group
-          setShowForm(false);
+          GetGroups()
+            .then((updatedData: ApiResponse) => {
+              if (updatedData.success) {
+                setGroups(updatedData.data);
+                setShowForm(false);
+              } else {
+                console.error(
+                  "Failed to fetch updated group data:",
+                  updatedData.message
+                );
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching updated group data:", error);
+            });
         } else {
           console.error("Failed to add group:", data.message);
         }

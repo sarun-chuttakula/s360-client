@@ -75,7 +75,7 @@ function Main() {
                 >
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/groups" element={<GroupChat />} />
-                  <Route path="/fee-board" element={<FeeBoard />} />
+                  <Route path="/fee-details" element={<FeeBoard />} />
                   <Route path="/result-board" element={<ResultBoard />} />
 
                   <Route path="/library" element={<Library />} />
