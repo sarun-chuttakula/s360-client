@@ -19,7 +19,6 @@ const GroupChat = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [messageInput, setMessageInput] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [reachedFirstMessage, setReachedFirstMessage] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -80,6 +79,13 @@ const GroupChat = () => {
       }
     }
   }, []);
+  //delete session storage when user logs out
+  useEffect(() => {
+    if (!auth) {
+      sessionStorage.removeItem("selectedGroup");
+      sessionStorage.removeItem("chatScrollPosition");
+    }
+  }, [auth]);
   const fetchMessages = (groupId: string, token: string, page: number) => {
     GetAllMessages(groupId, page)
       .then((data: ApiResponse) => {
@@ -98,18 +104,9 @@ const GroupChat = () => {
       });
   };
 
-  const fetchPreviousMessages = () => {
-    if (selectedGroup && currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    } else {
-      setReachedFirstMessage(true);
-    }
-  };
-
   const handleGroupClick = (group: Group) => {
     setSelectedGroup(group);
     setCurrentPage(1);
-    setReachedFirstMessage(false);
     // Store selected group in sessionStorage
     sessionStorage.setItem("selectedGroup", JSON.stringify(group));
   };

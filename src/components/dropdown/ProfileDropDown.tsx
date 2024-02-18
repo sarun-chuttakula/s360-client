@@ -22,7 +22,6 @@ const ProfileDropdown = () => {
   const userData = useSelector((state: any) => state.user.userData);
   let imagebygender, boyPhoto, girlPhoto;
   if (auth) {
-    console.log("User Data:", userData);
     const isTeacher = userData.role === "teacher";
 
     boyPhoto = isTeacher

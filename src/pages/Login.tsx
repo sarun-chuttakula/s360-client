@@ -16,9 +16,6 @@ const LoginScreen: React.FC = () => {
     password: "",
   });
   const userData = useSelector((state: any) => state.user.userData);
-  const isAuthenticated = useSelector(
-    (state: any) => state.user.isAuthenticated
-  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

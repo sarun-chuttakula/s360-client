@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import useAuth from "../hooks/useAuth";
+import { getFeeDetails } from "../api/fee-details.api";
 
 // Define the interface for the response data
 interface FeeDetailsData {
   amount: number;
-  t_id: string;
+  transaction_id: string;
+  is_paid: boolean;
+  payment_date: string;
 }
 
 const FeeBoard = () => {
@@ -13,23 +16,16 @@ const FeeBoard = () => {
   const [error, setError] = useState<string | null>(null);
   const auth = useAuth();
   const userData = useSelector((state: any) => state.user.userData);
+  const isTeacher = userData.role === "teacher";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5001/feedetails?id=student",
-          {
-            headers: {
-              Authorization: `Bearer ${auth?.accesstoken}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const responseData = await response.json();
-        setFeeDetails([responseData.data]); // Store data in array for rendering as table row
+        if (!auth) return;
+        const data = isTeacher
+          ? await getFeeDetails(auth.accesstoken)
+          : await getFeeDetails(auth.accesstoken, userData.ht_no);
+        setFeeDetails(data.data);
       } catch (error: any) {
         setError(error.message);
       }
@@ -50,6 +46,8 @@ const FeeBoard = () => {
               <th className="border border-gray-400 px-4 py-2">
                 Transaction ID
               </th>
+              <th className="border border-gray-400 px-4 py-2">Status</th>
+              <th className="border border-gray-400 px-4 py-2">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -59,7 +57,13 @@ const FeeBoard = () => {
                   {transaction.amount}
                 </td>
                 <td className="border border-gray-400 px-4 py-2">
-                  {transaction.t_id}
+                  {transaction.transaction_id}
+                </td>
+                <td className="border border-gray-400 px-4 py-2">
+                  {transaction.is_paid ? "Paid" : "Not Paid"}
+                </td>
+                <td className="border border-gray-400 px-4 py-2">
+                  {transaction.payment_date}
                 </td>
               </tr>
             ))}

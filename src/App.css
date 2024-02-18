@@ -643,3 +643,34 @@ th {
 .profile-dropdown:hover .dropdown-menu {
   display: block;
 }
+
+/* styles.css */
+.attendance-board {
+  font-family: Arial, sans-serif;
+}
+
+.attendance-board h1 {
+  color: #333;
+}
+
+.attendance-board table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.attendance-board th,
+.attendance-board td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.attendance-board th {
+  background-color: #f2f2f2;
+}
+
+.attendance-board .mark-attendance-checkbox {
+  margin: 0;
+  padding: 0;
+}
