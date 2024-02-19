@@ -20,6 +20,8 @@ import useAuth from "./hooks/useAuth";
 import Unauthorized from "./components/unauthorized/Unauthorized";
 import Missing from "./components/Missing";
 import ProfileDropdown from "./components/dropdown/ProfileDropDown";
+// import IOApp from "./pages/testio";
+// import Auth0Callback from "./components/Auth0Callback";
 function Main() {
   //only render sidebar when user is logged in
   const auth = useAuth();
@@ -54,6 +56,7 @@ function Main() {
                   path="*"
                   element={!auth ? <Navigate to="/login" /> : <Missing />}
                 />
+                {/* <Route path="/auth0-callback" element={<Auth0Callback />} /> */}
                 <Route path="/signup" element={<SignupScreen />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
                 <Route
@@ -100,6 +103,11 @@ function Main() {
       ) : null}
     </>
   );
+  // return (
+  //   <>
+  //     <IOApp />
+  //   </>
+  // );
 }
 
 export default Main;

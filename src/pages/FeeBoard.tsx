@@ -5,6 +5,7 @@ import { getFeeDetails } from "../api/fee-details.api";
 
 // Define the interface for the response data
 interface FeeDetailsData {
+  ht_no: string;
   amount: number;
   transaction_id: string;
   is_paid: boolean;
@@ -32,7 +33,7 @@ const FeeBoard = () => {
     };
 
     fetchData();
-  }, []);
+  }, [auth, isTeacher, userData.ht_no]);
 
   return (
     <div className="m-3">
@@ -42,6 +43,7 @@ const FeeBoard = () => {
         <table className="border-collapse border border-gray-400">
           <thead>
             <tr>
+              <th className="border border-gray-400 px-4 py-2">HT No</th>
               <th className="border border-gray-400 px-4 py-2">Amount</th>
               <th className="border border-gray-400 px-4 py-2">
                 Transaction ID
@@ -53,6 +55,9 @@ const FeeBoard = () => {
           <tbody>
             {feeDetails.map((transaction, index) => (
               <tr key={index} className="border border-gray-400">
+                <td className="border border-gray-400 px-4 py-2">
+                  {transaction.ht_no}
+                </td>
                 <td className="border border-gray-400 px-4 py-2">
                   {transaction.amount}
                 </td>

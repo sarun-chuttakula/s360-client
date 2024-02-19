@@ -3,8 +3,8 @@ import React from "react";
 export default function ResultBoard() {
   return (
     <div>
-      <h1>Result Board</h1>
-      <p>Welcome to the Notice Board</p>
+      <h1>Result</h1>
+      <p>need to work</p>
     </div>
   );
 }

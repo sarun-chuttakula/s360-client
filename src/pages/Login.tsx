@@ -5,9 +5,16 @@ import { login } from "../redux/actions/userActions"; // Import the login action
 import { Login } from "../api";
 import { ApiResponse } from "../interfaces/Auth";
 import AuthContext from "../context/AuthProvider";
-
+// import { useAuth0 } from "@auth0/auth0-react";
 const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
+  // const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+
+  // const handleLogin = () => {
+  //   loginWithRedirect();
+  //   console.log("User:", user);
+  //   console.log("IsAuthenticated:", isAuthenticated);
+  // };
   const { setAuth } = useContext(AuthContext);
   const dispatch = useDispatch(); // Initialize useDispatch hook
 
@@ -71,7 +78,7 @@ const LoginScreen: React.FC = () => {
           <button type="submit" className="btn btn-primary">
             Login Up
           </button>
-
+          {/* <button onClick={handleLogin}>Login with Auth0</button> */}
           <p>
             Don't have an account? <a href="/signup">Sign Up</a>
           </p>

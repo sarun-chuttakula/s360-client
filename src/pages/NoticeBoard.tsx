@@ -71,14 +71,15 @@ const NoticeBoard: React.FC = () => {
     DeleteNotice(noticeId, auth?.accesstoken as string)
       .then((data: ApiResponse) => {
         if (data.success) {
-          console.log("Group deleted successfully:", data.data);
-          // Fetch updated group list after deleting the group
+          console.log("Notice deleted successfully:", data.data);
+          // Fetch updated notice list after deleting the notice
+          fetchNotices();
         } else {
-          console.error("Failed to delete group:", data.message);
+          console.error("Failed to delete notice:", data.message);
         }
       })
       .catch((error) => {
-        console.error("Error deleting group:", error);
+        console.error("Error deleting notice:", error);
       });
   };
 

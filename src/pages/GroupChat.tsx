@@ -13,6 +13,8 @@ import {
 } from "../api/group-chat.api";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
+import * as io from "socket.io-client";
+import { ClientToServerEvents, ServerToClientEvents } from "../types/typings";
 const GroupChat = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
@@ -25,6 +27,18 @@ const GroupChat = () => {
   const auth = useAuth();
   const token = auth?.accesstoken as string;
   const userData = useSelector((state: any) => state.user.userData);
+  const socket: io.Socket<ServerToClientEvents, ClientToServerEvents> =
+    io.connect("http://localhost:5001");
+
+  useEffect(() => {
+    socket.on("serverMsg", (data) => {
+      console.log(socket.id);
+      console.log(data);
+      console.log(data.msg);
+      setMessages([...messages, data.msg]);
+    });
+  }, [socket, messages]);
+  // console.log(messages);
   // Load selected group from sessionStorage on component mount
   useEffect(() => {
     const storedSelectedGroup = JSON.parse(
@@ -133,11 +147,18 @@ const GroupChat = () => {
       group: selectedGroup?.id,
       message: messageInput,
     };
+    socket.emit("clientMsg", {
+      // sender: "senderId",
+      // receiver: "receiverId",
+      group_id: selectedGroup!.id,
+      msg: messageInput,
+    });
     SendMessage(messageData)
       .then((data: ApiResponse) => {
         if (data.success) {
           setMessages([...messages, data.data]);
           setMessageInput("");
+          setSelectedGroup(selectedGroup);
         } else {
           console.error("Failed to send message:", data.message);
         }

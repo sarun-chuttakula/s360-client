@@ -15,6 +15,7 @@ export interface TimeTableEntry {
 
 const Timetable: React.FC<TimetableProps> = ({ classId, token }) => {
   const [timetable, setTimetable] = useState<TimeTableEntry[] | null>(null);
+  console.log(timetable);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

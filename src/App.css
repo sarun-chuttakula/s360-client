@@ -579,6 +579,8 @@ ul > li {
 
 .chat-header {
   display: flex;
+  justify-content: space-between; /* Align items to the start and end */
+  align-items: center; /* Center items vertically */
   font-size: 20px;
   margin-bottom: 20px;
   color: #fff; /* White text color */
@@ -588,9 +590,13 @@ ul > li {
 }
 
 .delete-group-icon {
-  margin-left: 740px;
   cursor: pointer;
-  color: #fff; /* Change the color as needed */
+  color: #fff; /* White text color */
+  transition: color 0.3s ease; /* Add transition for smoother hover effect */
+}
+
+.delete-group-icon:hover {
+  color: #ff0000; /* Change color on hover */
 }
 
 /* Chat Messages */

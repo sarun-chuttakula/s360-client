@@ -8,19 +8,27 @@ import { AuthProvider } from "./context/AuthProvider";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+// import { Auth0Provider } from "@auth0/auth0-react";
 // import { PersistGate } from "redux-persist/integration/react";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <AuthProvider>
+            {/* <Auth0Provider
+              domain="dev-kplcs1pr0hwa12ng.us.auth0.com"
+              clientId="ccbAC6Xu1GMDnJuzfA4fX8igPj6AyXxY"
+              authorizationParams={{ redirect_uri: window.location.origin }}
+            > */}
             <Routes>
               <Route path="/*" element={<App />} />
             </Routes>
+            {/* </Auth0Provider> */}
           </AuthProvider>
         </BrowserRouter>
       </PersistGate>
