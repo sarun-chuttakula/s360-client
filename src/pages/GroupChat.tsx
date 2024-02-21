@@ -31,8 +31,10 @@ const GroupChat = () => {
   const token = auth?.accesstoken as string;
   const userData = useSelector((state: any) => state.user.userData);
   useEffect(() => {
-    const initialNewMessagesCount = JSON.parse(localStorage.getItem("newMessagesCount") || "{}");
-  setNewMessagesCount(initialNewMessagesCount);
+    const initialNewMessagesCount = JSON.parse(
+      localStorage.getItem("newMessagesCount") || "{}"
+    );
+    setNewMessagesCount(initialNewMessagesCount);
     socket = io.connect("http://192.168.2.178:5001");
     socket.on("connect", () => {
       console.log("Connected");
@@ -49,10 +51,13 @@ const GroupChat = () => {
           [data.group.id]: (prevCount[data.group.id] || 0) + 1,
         }));
         // Update localStorage with the new count for unseen messages
-      localStorage.setItem("newMessagesCount", JSON.stringify({
-        ...newMessagesCount,
-        [data.group.id]: (newMessagesCount[data.group.id] || 0) + 1,
-      }));
+        localStorage.setItem(
+          "newMessagesCount",
+          JSON.stringify({
+            ...newMessagesCount,
+            [data.group.id]: (newMessagesCount[data.group.id] || 0) + 1,
+          })
+        );
       }
     });
 
@@ -98,30 +103,13 @@ const GroupChat = () => {
     }
   }, [selectedGroup, currentPage]);
   useEffect(() => {
+    console.log(messages.length);
     // Store scroll position in sessionStorage when component unmounts
-    return () => {
-      if (chatContainerRef.current) {
-        sessionStorage.setItem(
-          "chatScrollPosition",
-          chatContainerRef.current.scrollTop.toString()
-        );
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    // Restore scroll position from sessionStorage when component mounts
     if (chatContainerRef.current) {
-      const storedScrollPosition = sessionStorage.getItem("chatScrollPosition");
-      if (storedScrollPosition) {
-        chatContainerRef.current.scrollTop = parseInt(storedScrollPosition);
-      } else {
-        // If no scroll position is stored, scroll to the bottom
-        chatContainerRef.current.scrollTop =
-          chatContainerRef.current.scrollHeight;
-      }
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current?.scrollHeight;
     }
-  }, []);
+  }, [messages]);
   useEffect(() => {
     if (!auth) {
       sessionStorage.removeItem("selectedGroup");
@@ -155,10 +143,13 @@ const GroupChat = () => {
       ...prevCount,
       [group.id]: 0,
     }));
-    localStorage.setItem("newMessagesCount", JSON.stringify({
-      ...newMessagesCount,
-      [group.id]: 0,
-    }));
+    localStorage.setItem(
+      "newMessagesCount",
+      JSON.stringify({
+        ...newMessagesCount,
+        [group.id]: 0,
+      })
+    );
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,7 +290,7 @@ const GroupChat = () => {
               </div>
             </div>
             <div className="chat-content">
-              <div className="chat-messages">
+              <div ref={chatContainerRef} className="chat-messages">
                 {messages.map((msg, index) => (
                   <div key={index}>{msg.message}</div>
                 ))}
