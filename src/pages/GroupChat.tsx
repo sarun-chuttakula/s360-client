@@ -9,12 +9,12 @@ import {
   DeleteGroup,
   GetAllMessages,
   GetGroups,
-  SendMessage,
 } from "../api/group-chat.api";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
 import * as io from "socket.io-client";
-import { ClientToServerEvents, ServerToClientEvents } from "../types/typings";
+// import { ClientToServerEvents, ServerToClientEvents } from "../types/typings";
+let socket: any;
 const GroupChat = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
@@ -27,19 +27,31 @@ const GroupChat = () => {
   const auth = useAuth();
   const token = auth?.accesstoken as string;
   const userData = useSelector((state: any) => state.user.userData);
-  const socket: io.Socket<ServerToClientEvents, ClientToServerEvents> =
-    io.connect("http://localhost:5001");
 
   useEffect(() => {
-    socket.on("serverMsg", (data) => {
+    socket = io.connect("http://192.168.2.178:5001");
+    socket.on("connect", () => {
+      console.log("Connected");
+    });
+    socket.on("serverMsg", (data: any) => {
       console.log(socket.id);
       console.log(data);
-      console.log(data.msg);
-      setMessages([...messages, data.msg]);
+      console.log(data.message);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: data.id,
+          message: data.message,
+          receiver: "receiverId",
+          sender: data.sender,
+        },
+      ]);
     });
-  }, [socket, messages]);
-  // console.log(messages);
-  // Load selected group from sessionStorage on component mount
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
   useEffect(() => {
     const storedSelectedGroup = JSON.parse(
       sessionStorage.getItem("selectedGroup") || "null"
@@ -49,7 +61,7 @@ const GroupChat = () => {
     }
   }, []);
   useEffect(() => {
-    GetGroups()
+    GetGroups(token)
       .then((data: ApiResponse) => {
         if (data.success) {
           setGroups(data.data);
@@ -61,7 +73,7 @@ const GroupChat = () => {
         console.error("Error fetching group data:", error);
       });
     setUserRole(userData.role);
-  }, []);
+  }, [token, userData.role]);
 
   useEffect(() => {
     if (selectedGroup) {
@@ -100,13 +112,13 @@ const GroupChat = () => {
     }
   }, [auth]);
   const fetchMessages = (groupId: string, token: string, page: number) => {
-    GetAllMessages(groupId, page)
+    GetAllMessages(token, groupId, page)
       .then((data: ApiResponse) => {
         if (data.success) {
           if (currentPage === 1) {
             setMessages(data.data);
           } else {
-            setMessages([...data.data, ...messages]);
+            // setMessages([...data.data, ...messages]);
           }
         } else {
           console.error("Failed to fetch messages:", data.message);
@@ -126,10 +138,12 @@ const GroupChat = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessageInput(event.target.value);
+    console.log("handleInputChange called!");
   };
 
   const handleMessageSend = () => {
     if (messageInput.trim() === "") return;
+    console.log("Sending message!");
     sendMessage();
   };
 
@@ -142,40 +156,23 @@ const GroupChat = () => {
 
   const sendMessage = () => {
     const messageData = {
-      sender: "senderId",
+      sender: userData.id,
       receiver: "receiverId",
       group: selectedGroup?.id,
       message: messageInput,
     };
-    socket.emit("clientMsg", {
-      // sender: "senderId",
-      // receiver: "receiverId",
-      group_id: selectedGroup!.id,
-      msg: messageInput,
-    });
-    SendMessage(messageData)
-      .then((data: ApiResponse) => {
-        if (data.success) {
-          setMessages([...messages, data.data]);
-          setMessageInput("");
-          setSelectedGroup(selectedGroup);
-        } else {
-          console.error("Failed to send message:", data.message);
-        }
-      })
-      .catch((error) => {
-        console.error("Error sending message:", error);
-      });
+    socket.emit("clientMsg", messageData);
+    setMessageInput("");
   };
 
   const handleAddGroup = (groupData: GroupData) => {
     console.log("Adding group:", groupData);
-    CreateGroup(groupData)
+    CreateGroup(token, groupData)
       .then((data: ApiResponse) => {
         if (data.success) {
           console.log("Group added successfully:", data.data);
           // Fetch updated group list after adding the group
-          GetGroups()
+          GetGroups(token)
             .then((updatedData: ApiResponse) => {
               if (updatedData.success) {
                 setGroups(updatedData.data);
@@ -201,7 +198,7 @@ const GroupChat = () => {
 
   const handleDeleteGroup = (groupId: string) => {
     console.log("Deleting group:", groupId);
-    DeleteGroup(groupId)
+    DeleteGroup(token, groupId)
       .then((data: ApiResponse) => {
         if (data.success) {
           console.log("Group deleted successfully:", data.data);
