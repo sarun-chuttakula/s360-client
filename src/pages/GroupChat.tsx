@@ -30,8 +30,9 @@ const GroupChat = () => {
   const auth = useAuth();
   const token = auth?.accesstoken as string;
   const userData = useSelector((state: any) => state.user.userData);
-
   useEffect(() => {
+    const initialNewMessagesCount = JSON.parse(localStorage.getItem("newMessagesCount") || "{}");
+  setNewMessagesCount(initialNewMessagesCount);
     socket = io.connect("http://192.168.2.178:5001");
     socket.on("connect", () => {
       console.log("Connected");
@@ -45,8 +46,13 @@ const GroupChat = () => {
       } else {
         setNewMessagesCount((prevCount) => ({
           ...prevCount,
-          [data.group]: (prevCount[data.group] || 0) + 1,
+          [data.group.id]: (prevCount[data.group.id] || 0) + 1,
         }));
+        // Update localStorage with the new count for unseen messages
+      localStorage.setItem("newMessagesCount", JSON.stringify({
+        ...newMessagesCount,
+        [data.group.id]: (newMessagesCount[data.group.id] || 0) + 1,
+      }));
       }
     });
 
@@ -147,6 +153,10 @@ const GroupChat = () => {
     sessionStorage.setItem("selectedGroup", JSON.stringify(group));
     setNewMessagesCount((prevCount) => ({
       ...prevCount,
+      [group.id]: 0,
+    }));
+    localStorage.setItem("newMessagesCount", JSON.stringify({
+      ...newMessagesCount,
       [group.id]: 0,
     }));
   };
