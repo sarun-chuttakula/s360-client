@@ -24,6 +24,9 @@ const GroupChat = () => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [newMessagesCount, setNewMessagesCount] = useState<{
+    [key: string]: number;
+  }>({});
   const auth = useAuth();
   const token = auth?.accesstoken as string;
   const userData = useSelector((state: any) => state.user.userData);
@@ -37,21 +40,20 @@ const GroupChat = () => {
       console.log(socket.id);
       console.log(data);
       console.log(data.message);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          id: data.id,
-          message: data.message,
-          receiver: "receiverId",
-          sender: data.sender,
-        },
-      ]);
+      if (data.group.id === selectedGroup?.id) {
+        setMessages((prevMessages) => [...prevMessages, data]);
+      } else {
+        setNewMessagesCount((prevCount) => ({
+          ...prevCount,
+          [data.group]: (prevCount[data.group] || 0) + 1,
+        }));
+      }
     });
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [selectedGroup]);
   useEffect(() => {
     const storedSelectedGroup = JSON.parse(
       sessionStorage.getItem("selectedGroup") || "null"
@@ -60,6 +62,15 @@ const GroupChat = () => {
       setSelectedGroup(storedSelectedGroup);
     }
   }, []);
+
+  useEffect(() => {
+    // Update new messages count when switching between groups
+    const currentGroup: string = selectedGroup! ? selectedGroup!.id : "";
+    setNewMessagesCount((prevCount) => ({
+      ...prevCount,
+      [currentGroup]: 0,
+    }));
+  }, [selectedGroup]);
   useEffect(() => {
     GetGroups(token)
       .then((data: ApiResponse) => {
@@ -134,6 +145,10 @@ const GroupChat = () => {
     setCurrentPage(1);
     // Store selected group in sessionStorage
     sessionStorage.setItem("selectedGroup", JSON.stringify(group));
+    setNewMessagesCount((prevCount) => ({
+      ...prevCount,
+      [group.id]: 0,
+    }));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,6 +170,7 @@ const GroupChat = () => {
   };
 
   const sendMessage = () => {
+    // if (!selectedGroup || messageInput.trim() === "") return;
     const messageData = {
       sender: userData.id,
       receiver: "receiverId",
@@ -230,6 +246,11 @@ const GroupChat = () => {
               onClick={() => handleGroupClick(group)}
             >
               {group.name}
+              {newMessagesCount[group.id] > 0 && (
+                <span className="new-message-count">
+                  ({newMessagesCount[group.id]})
+                </span>
+              )}
             </li>
           ))}
         </ul>
