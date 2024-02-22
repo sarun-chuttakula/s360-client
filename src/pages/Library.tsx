@@ -6,7 +6,6 @@ interface Item {
   name: string;
   parent: string | null;
   children: Item[];
-  type: "directory" | "file";
   size?: number;
 }
 
@@ -16,19 +15,12 @@ const MyTree: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = "your_token_here";
+        const token = "";
         const path =
           "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
         const responseData = await getFolderStructure(token, path);
 
-        if (Array.isArray(responseData)) {
-          const root = responseData.find((item: Item) => item.parent === null);
-          if (root) {
-            setRootItem(root);
-          } else {
-            console.error("Root item 'thumbnails' not found in response");
-          }
-        } else if (typeof responseData === "object" && responseData !== null) {
+        if (responseData) {
           setRootItem(responseData);
         } else {
           console.error("Invalid response data format");
@@ -43,15 +35,11 @@ const MyTree: React.FC = () => {
 
   const renderTreeNodes = (item: Item) => {
     return item.children.map((child, index) => (
-      <React.Fragment key={index}>
-        {child.type === "directory" ? (
-          child.parent !== null ? (
-            <Tree.Folder key={child.name} name={child.name}>
-              {renderTreeNodes(child)}
-            </Tree.Folder>
-          ) : (
-            ""
-          )
+      <React.Fragment key={child.name}>
+        {child.children.length > 0 ? (
+          <Tree.Folder key={child.name} name={child.name}>
+            {renderTreeNodes(child)}
+          </Tree.Folder>
         ) : (
           <Tree.File key={child.name} name={child.name} />
         )}
