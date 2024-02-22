@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Tree } from "@geist-ui/react";
-import { getFolderStructure } from "../api/library.api";
+import { getFolderStructure, downloadFile } from "../api/library.api";
 
 type FileTreeValue = {
   type: "directory" | "file";
@@ -11,6 +11,7 @@ type FileTreeValue = {
 
 const MyTree: React.FC = () => {
   const [rootItem, setRootItem] = useState<FileTreeValue | null>(null);
+  const [fileContent, setFileContent] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +34,23 @@ const MyTree: React.FC = () => {
     fetchData();
   }, []);
 
+  const handleItemClick = async (filename: string) => {
+    try {
+      const token = ""; // Add your authentication token here
+      const filePath = `/Users/ch.sarun/Documents/MyCodes/Code/Projects/S360/s360-server/src/thumbnails/test1/utils/${filename}`;
+      const fileData: Blob = await downloadFile(token, filePath);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const content = reader.result as string;
+        setFileContent(content);
+      };
+      reader.readAsText(fileData);
+    } catch (error: any) {
+      console.error("Error downloading file:", error.message);
+    }
+  };
+
   const renderTreeNodes = (item: FileTreeValue): JSX.Element[] | null => {
     if (item.type === "directory" && item.files) {
       return item.files.flatMap((child) =>
@@ -43,7 +61,14 @@ const MyTree: React.FC = () => {
             </Tree.Folder>,
           ]
         ) : (
-          <Tree.File key={child.name} name={child.name} extra={child.extra} />
+          <React.Fragment key={child.name}>
+            <Tree.File
+              key={child.name}
+              name={child.name}
+              extra={child.extra}
+              onClick={() => handleItemClick(child.name)}
+            />
+          </React.Fragment>
         )
       );
     }
@@ -52,13 +77,20 @@ const MyTree: React.FC = () => {
 
   return (
     <div className="custom-tree">
-      <Tree>
-        {rootItem && (
-          <Tree.Folder key={rootItem.name} name={rootItem.name}>
-            {rootItem.files && renderTreeNodes(rootItem)}
-          </Tree.Folder>
-        )}
-      </Tree>
+      <div className="tree-container">
+        <Tree>
+          {rootItem && (
+            <Tree.Folder key={rootItem.name} name={rootItem.name}>
+              {rootItem.files && renderTreeNodes(rootItem)}
+            </Tree.Folder>
+          )}
+        </Tree>
+      </div>
+      {fileContent && (
+        <div className="file-content">
+          <pre>{fileContent}</pre>
+        </div>
+      )}
     </div>
   );
 };
