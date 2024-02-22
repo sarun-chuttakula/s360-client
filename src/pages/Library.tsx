@@ -1,92 +1,75 @@
-import React, { useState, useEffect } from "react";
-import { IoFolderOpenSharp } from "react-icons/io5";
-import { LuFiles } from "react-icons/lu";
-import { Props, Item, Directory } from "../interfaces";
+import React, { useEffect, useState } from "react";
+import { Tree } from "@geist-ui/react";
+import { getFolderStructure } from "../api/library.api";
 
-export default function Library() {
-  const [directoryStructure, setDirectoryStructure] = useState<Item[] | null>(
-    null
-  );
-  const token = "your_jwt_token_here"; // Replace 'your_jwt_token_here' with your actual JWT token
+interface Item {
+  name: string;
+  parent: string | null;
+  children: Item[];
+  type: "directory" | "file";
+  size?: number;
+}
+
+const MyTree: React.FC = () => {
+  const [rootItem, setRootItem] = useState<Item | null>(null);
 
   useEffect(() => {
-    // Fetch directory structure from the API
-    fetch("http://localhost:5001/library/getdirectories", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch directory structure");
+    const fetchData = async () => {
+      try {
+        const token = "your_token_here";
+        const path =
+          "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
+        const responseData = await getFolderStructure(token, path);
+
+        if (Array.isArray(responseData)) {
+          const root = responseData.find((item: Item) => item.parent === null);
+          if (root) {
+            setRootItem(root);
+          } else {
+            console.error("Root item 'thumbnails' not found in response");
+          }
+        } else if (typeof responseData === "object" && responseData !== null) {
+          setRootItem(responseData);
+        } else {
+          console.error("Invalid response data format");
         }
-        return response.json();
-      })
-      .then((data: Directory) => {
-        // Transform the API response to match the DirectoryItem structure
-        const transformedData: Item[] = data.contents.map((item) => ({
-          id: item.id,
-          name: item.name,
-          type: item.mimeType.startsWith("application/vnd.google-apps.folder")
-            ? "directory"
-            : "file",
-          children: item.mimeType.startsWith(
-            "application/vnd.google-apps.folder"
+      } catch (error: any) {
+        console.error("Error fetching directory structure:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const renderTreeNodes = (item: Item) => {
+    return item.children.map((child, index) => (
+      <React.Fragment key={index}>
+        {child.type === "directory" ? (
+          child.parent !== null ? (
+            <Tree.Folder key={child.name} name={child.name}>
+              {renderTreeNodes(child)}
+            </Tree.Folder>
+          ) : (
+            ""
           )
-            ? []
-            : undefined,
-        }));
-        // Set directory structure state
-        setDirectoryStructure(transformedData);
-      })
-      .catch((error) => {
-        console.error("Error fetching directory structure:", error);
-      });
-  }, []); // Empty dependency array to ensure useEffect runs only once
+        ) : (
+          <Tree.File key={child.name} name={child.name} />
+        )}
+      </React.Fragment>
+    ));
+  };
 
   return (
     <div>
-      {directoryStructure ? (
-        <DirectoryStructure data={directoryStructure} />
-      ) : (
-        <p>Loading...</p>
-      )}
+      <Tree>
+        {rootItem && (
+          <Tree.Folder key={rootItem.name} name={rootItem.name}>
+            {renderTreeNodes(rootItem)}
+          </Tree.Folder>
+        )}
+      </Tree>
     </div>
   );
-}
+};
 
-export function DirectoryStructure({ data }: Props) {
-  if (!Array.isArray(data)) {
-    return <p>Error: Data is not in the expected format</p>;
-  }
-
-  return (
-    <ul>
-      {data.map((item) => (
-        <DirectoryItem key={item.id} item={item} />
-      ))}
-    </ul>
-  );
-}
-
-export function DirectoryItem({ item }: { item: Item }) {
-  return (
-    <li className="list-item">
-      {" "}
-      {/* Apply CSS class */}
-      {item.type === "directory" ? (
-        <>
-          <IoFolderOpenSharp className="icon folder-icon" />{" "}
-          {/* Apply CSS class */}
-          <span className="folder">{item.name}</span>
-          {item.children && <DirectoryStructure data={item.children} />}
-        </>
-      ) : (
-        <>
-          <LuFiles className="icon file-icon" /> {/* Apply CSS class */}
-          <span className="file">{item.name}</span>
-        </>
-      )}
-    </li>
-  );
-}
+export default MyTree;
