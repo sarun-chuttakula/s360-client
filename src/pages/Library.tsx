@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Tree } from "@geist-ui/react";
 import { getFolderStructure } from "../api/library.api";
 
-interface Item {
+type FileTreeValue = {
+  type: "directory" | "file";
   name: string;
-  parent: string | null;
-  children: Item[];
-  size?: number;
-}
+  extra?: string;
+  files?: FileTreeValue[];
+};
 
 const MyTree: React.FC = () => {
-  const [rootItem, setRootItem] = useState<Item | null>(null);
+  const [rootItem, setRootItem] = useState<FileTreeValue | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = "";
         const path =
-          "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
+          "/Users/ch.sarun/Documents/MyCodes/Code/Projects/S360/s360-server/src/thumbnails";
         const responseData = await getFolderStructure(token, path);
 
         if (responseData) {
@@ -33,26 +33,29 @@ const MyTree: React.FC = () => {
     fetchData();
   }, []);
 
-  const renderTreeNodes = (item: Item) => {
-    return item.children.map((child, index) => (
-      <React.Fragment key={child.name}>
-        {child.children.length > 0 ? (
-          <Tree.Folder key={child.name} name={child.name}>
-            {renderTreeNodes(child)}
-          </Tree.Folder>
+  const renderTreeNodes = (item: FileTreeValue): JSX.Element[] | null => {
+    if (item.type === "directory" && item.files) {
+      return item.files.flatMap((child) =>
+        child.type === "directory" ? (
+          [
+            <Tree.Folder key={child.name} name={child.name}>
+              {renderTreeNodes(child)}
+            </Tree.Folder>,
+          ]
         ) : (
-          <Tree.File key={child.name} name={child.name} />
-        )}
-      </React.Fragment>
-    ));
+          <Tree.File key={child.name} name={child.name} extra={child.extra} />
+        )
+      );
+    }
+    return null;
   };
 
   return (
-    <div>
+    <div className="custom-tree">
       <Tree>
         {rootItem && (
           <Tree.Folder key={rootItem.name} name={rootItem.name}>
-            {renderTreeNodes(rootItem)}
+            {rootItem.files && renderTreeNodes(rootItem)}
           </Tree.Folder>
         )}
       </Tree>
