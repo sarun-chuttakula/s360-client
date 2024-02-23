@@ -35,7 +35,7 @@ const GroupChat = () => {
       localStorage.getItem("newMessagesCount") || "{}"
     );
     setNewMessagesCount(initialNewMessagesCount);
-    socket = io.connect("http://192.168.2.178:5001");
+    socket = io.connect("http://localhost:5001");
     socket.on("connect", () => {
       console.log("Connected");
     });
