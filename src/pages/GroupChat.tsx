@@ -35,7 +35,7 @@ const GroupChat = () => {
       localStorage.getItem("newMessagesCount") || "{}"
     );
     setNewMessagesCount(initialNewMessagesCount);
-    socket = io.connect("http://localhost:5001");
+    socket = io.connect("http://192.168.2.178:5001");
     socket.on("connect", () => {
       console.log("Connected");
     });
@@ -46,18 +46,21 @@ const GroupChat = () => {
       if (data.group.id === selectedGroup?.id) {
         setMessages((prevMessages) => [...prevMessages, data]);
       } else {
-        setNewMessagesCount((prevCount) => ({
-          ...prevCount,
-          [data.group.id]: (prevCount[data.group.id] || 0) + 1,
-        }));
-        // Update localStorage with the new count for unseen messages
-        localStorage.setItem(
-          "newMessagesCount",
-          JSON.stringify({
-            ...newMessagesCount,
-            [data.group.id]: (newMessagesCount[data.group.id] || 0) + 1,
-          })
-        );
+        setNewMessagesCount((prevCount) => {
+          const updatedCount = (prevCount[data.group.id] || 0) + 1;
+          // Update localStorage with the new count for unseen messages
+          localStorage.setItem(
+            "newMessagesCount",
+            JSON.stringify({
+              ...prevCount,
+              [data.group.id]: updatedCount,
+            })
+          );
+          return {
+            ...prevCount,
+            [data.group.id]: updatedCount,
+          };
+        });
       }
     });
 

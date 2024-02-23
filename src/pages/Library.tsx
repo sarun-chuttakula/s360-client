@@ -18,7 +18,7 @@ const MyTree: React.FC = () => {
       try {
         const token = "";
         const path =
-          "/Users/ch.sarun/Documents/MyCodes/Code/Projects/S360/s360-server/src/thumbnails";
+          "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
         const responseData = await getFolderStructure(token, path);
 
         if (responseData) {
@@ -33,11 +33,36 @@ const MyTree: React.FC = () => {
 
     fetchData();
   }, []);
+  // const handleItemClickDownload = async (filename: string) => {
+  //   try {
+  //     const token = ""; // Provide the token here
+  //     const path = `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/types/${filename}`;
+  //     const fileBlob = await downloadFile(token, path);
+      
+  //     // Create a URL for the blob
+  //     const fileUrl = window.URL.createObjectURL(fileBlob);
+      
+  //     // Create a link element
+  //     const link = document.createElement("a");
+  //     link.href = fileUrl;
+  //     link.download = filename; // Set the filename for download
+      
+  //     // Append the link to the body and trigger the click event
+  //     document.body.appendChild(link);
+  //     link.click();
+      
+  //     // Clean up
+  //     document.body.removeChild(link);
+  //     window.URL.revokeObjectURL(fileUrl);
+  //   } catch (error:any) {
+  //     console.error("Error downloading file:", error.message);
+  //   }
+  // };
 
   const handleItemClick = async (filename: string) => {
     try {
       const token = ""; // Add your authentication token here
-      const filePath = `/Users/ch.sarun/Documents/MyCodes/Code/Projects/S360/s360-server/src/thumbnails/test1/utils/${filename}`;
+      const filePath = `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/types/express/${filename}`;
       const fileData: Blob = await downloadFile(token, filePath);
 
       const reader = new FileReader();
