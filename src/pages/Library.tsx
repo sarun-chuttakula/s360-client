@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Tree } from "@geist-ui/react";
 import { getFolderStructure, downloadFile } from "../api/library.api";
+import { useSelector } from "react-redux";
 
 type FileTreeValue = {
   type: "directory" | "file";
@@ -12,13 +13,17 @@ type FileTreeValue = {
 const MyTree: React.FC = () => {
   const [rootItem, setRootItem] = useState<FileTreeValue | null>(null);
   const [fileContent, setFileContent] = useState<string | null>(null);
-
+  const userData = useSelector((state: any) => state.user.userData);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = "";
+        const batch = userData.batch;
+        console.log("Batch:", batch);
         const path =
-          "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
+          userData.role === "student"
+            ? `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/${batch}`
+            : "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
         const responseData = await getFolderStructure(token, path);
 
         if (responseData) {
@@ -33,56 +38,67 @@ const MyTree: React.FC = () => {
 
     fetchData();
   }, []);
-  // const handleItemClickDownload = async (filename: string) => {
-  //   try {
-  //     const token = ""; // Provide the token here
-  //     const path = `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/types/${filename}`;
-  //     const fileBlob = await downloadFile(token, path);
-      
-  //     // Create a URL for the blob
-  //     const fileUrl = window.URL.createObjectURL(fileBlob);
-      
-  //     // Create a link element
-  //     const link = document.createElement("a");
-  //     link.href = fileUrl;
-  //     link.download = filename; // Set the filename for download
-      
-  //     // Append the link to the body and trigger the click event
-  //     document.body.appendChild(link);
-  //     link.click();
-      
-  //     // Clean up
-  //     document.body.removeChild(link);
-  //     window.URL.revokeObjectURL(fileUrl);
-  //   } catch (error:any) {
-  //     console.error("Error downloading file:", error.message);
-  //   }
-  // };
-
-  const handleItemClick = async (filename: string) => {
+  const handleItemClickDownload = async (
+    filename: string,
+    currentPath: string
+  ) => {
     try {
-      const token = ""; // Add your authentication token here
-      const filePath = `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/types/express/${filename}`;
-      const fileData: Blob = await downloadFile(token, filePath);
+      console.log("File Path:", currentPath);
+      const token = ""; // Provide the token here
+      const path =
+        userData.role === "teacher"
+          ? `/home/xelpmoc/Documents/Code/OWN/s360-server/src/${currentPath}`
+          : `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/${currentPath}`;
+      const fileBlob = await downloadFile(token, path);
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        const content = reader.result as string;
-        setFileContent(content);
-      };
-      reader.readAsText(fileData);
+      // Create a URL for the blob
+      const fileUrl = window.URL.createObjectURL(fileBlob);
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.download = filename; // Set the filename for download
+
+      // Append the link to the body and trigger the click event
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(fileUrl);
     } catch (error: any) {
       console.error("Error downloading file:", error.message);
     }
   };
 
-  const renderTreeNodes = (item: FileTreeValue): JSX.Element[] | null => {
+  // const handleItemClick = async (filename: string, currentPath: string) => {
+  //   try {
+  //     console.log("File Path:", currentPath);
+  //     const token = ""; // Add your authentication token here
+  //     const filePath = `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/types/express/${filename}`;
+  //     const fileData: Blob = await downloadFile(token, filePath);
+
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       const content = reader.result as string;
+  //       setFileContent(content);
+  //     };
+  //     reader.readAsText(fileData);
+  //   } catch (error: any) {
+  //     console.error("Error downloading file:", error.message);
+  //   }
+  // };
+
+  const renderTreeNodes = (
+    item: FileTreeValue,
+    path: string
+  ): JSX.Element[] | null => {
     if (item.type === "directory" && item.files) {
       return item.files.flatMap((child) =>
         child.type === "directory" ? (
           [
             <Tree.Folder key={child.name} name={child.name}>
-              {renderTreeNodes(child)}
+              {renderTreeNodes(child, `${path}/${child.name}`)}
             </Tree.Folder>,
           ]
         ) : (
@@ -91,7 +107,9 @@ const MyTree: React.FC = () => {
               key={child.name}
               name={child.name}
               extra={child.extra}
-              onClick={() => handleItemClick(child.name)}
+              onClick={() =>
+                handleItemClickDownload(child.name, `${path}/${child.name}`)
+              }
             />
           </React.Fragment>
         )
@@ -106,7 +124,7 @@ const MyTree: React.FC = () => {
         <Tree>
           {rootItem && (
             <Tree.Folder key={rootItem.name} name={rootItem.name}>
-              {rootItem.files && renderTreeNodes(rootItem)}
+              {rootItem.files && renderTreeNodes(rootItem, `/${rootItem.name}`)}
             </Tree.Folder>
           )}
         </Tree>

@@ -27,6 +27,7 @@ interface AuthData {
   password: string;
   lastlogin: string;
   profile_pic: string | null;
+  batch?: string | null;
   accesstoken: string;
   refreshtoken: string;
 }
