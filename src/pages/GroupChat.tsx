@@ -13,6 +13,7 @@ import {
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
 import * as io from "socket.io-client";
+import { BASE_API_URL } from "../api/api-resource";
 // import { ClientToServerEvents, ServerToClientEvents } from "../types/typings";
 let socket: any;
 const GroupChat = () => {
@@ -35,7 +36,7 @@ const GroupChat = () => {
       localStorage.getItem("newMessagesCount") || "{}"
     );
     setNewMessagesCount(initialNewMessagesCount);
-    socket = io.connect("http://localhost:5001");
+    socket = io.connect(BASE_API_URL);
     socket.on("connect", () => {
       console.log("Connected");
     });

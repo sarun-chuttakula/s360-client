@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getTimeTable } from "../api"; // Adjust the path as per your file structure
 
 interface TimetableProps {
   classId: string;
@@ -21,22 +22,8 @@ const Timetable: React.FC<TimetableProps> = ({ classId, token }) => {
   useEffect(() => {
     const fetchTimetable = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5001/class/timetable?classId=${classId}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch timetable data");
-        }
-
-        const responseData = await response.json();
-        setTimetableData(responseData.data);
+        const data = await getTimeTable(token, classId);
+        setTimetableData(data);
       } catch (error: any) {
         setError(error.message);
       }

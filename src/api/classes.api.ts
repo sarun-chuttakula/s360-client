@@ -23,20 +23,21 @@ export const getClasses = async (token: string) => {
 export const getTimeTable = async (token: string, classId: string) => {
   try {
     const response = await fetch(
-      `${CLASSES_API_URLS}/timetable/?classId=${classId}`,
+      `http://192.168.0.109:5001/class/timetable?classId=${classId}`,
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }
     );
+
     if (!response.ok) {
-      throw new Error("Failed to fetch timetable");
+      throw new Error("Failed to fetch timetable data");
     }
+
     const responseData = await response.json();
-    return responseData;
+    return responseData.data;
   } catch (error: any) {
     console.error("Error during fetching timetable:", error.message);
     throw error;
