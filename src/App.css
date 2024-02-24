@@ -795,8 +795,8 @@ th {
 }
 
 .custom-button {
-  font-size: 12px; /* Adjust the font size */
-  padding: 6px 12px; /* Adjust the padding */
+  font-size: 12px;
+  padding: 6px 12px;
 }
 
 .file-content {
@@ -805,8 +805,8 @@ th {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-right: 100px;
-  overflow: auto; /* Add scrollbar when content overflows */
-  height: 700px; /* Limit height to show scrollbar if content exceeds */
+  overflow: auto;
+  height: 700px;
   width: 600px;
 }
 

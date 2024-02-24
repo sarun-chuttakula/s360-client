@@ -21,6 +21,29 @@ export const getStudentsAttendance = async (token: string) => {
   }
 };
 
+export const getStudentsbyClass = async (token: string, classId: string) => {
+  try {
+    const response = await fetch(
+      `${ATTENDANCE_API_URLS}/students?classId=${classId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch students by class");
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error: any) {
+    console.error("Error during fetching students by class:", error.message);
+    throw error;
+  }
+};
+
 export const markAttendance = async (
   markAttendance: INewAttendanceRequest[],
   token: string

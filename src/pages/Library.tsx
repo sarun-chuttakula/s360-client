@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Tree } from "@geist-ui/react";
 import { getFolderStructure, downloadFile } from "../api/library.api";
 import { useSelector } from "react-redux";
+import useAuth from "../hooks/useAuth";
 
 type FileTreeValue = {
   type: "directory" | "file";
@@ -11,23 +12,21 @@ type FileTreeValue = {
 };
 
 const MyTree: React.FC = () => {
+  const auth = useAuth();
+  const token = auth?.accesstoken as string;
   const [rootItem, setRootItem] = useState<FileTreeValue | null>(null);
   const [fileContent, setFileContent] = useState<string | null>(null);
   const userData = useSelector((state: any) => state.user.userData);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = "";
         const batch = userData.batch;
         console.log("Batch:", batch);
-        const path =
-          userData.role === "student"
-            ? `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/${batch}`
-            : "/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails";
+        const path = userData.role === "student" ? `/${batch}` : "";
         const responseData = await getFolderStructure(token, path);
 
         if (responseData) {
-          setRootItem(responseData);
+          setRootItem(responseData.data);
         } else {
           console.error("Invalid response data format");
         }
@@ -37,19 +36,16 @@ const MyTree: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [userData, token]);
   const handleItemClickDownload = async (
     filename: string,
     currentPath: string
   ) => {
     try {
       console.log("File Path:", currentPath);
-      const token = ""; // Provide the token here
-      const path =
-        userData.role === "teacher"
-          ? `/home/xelpmoc/Documents/Code/OWN/s360-server/src/${currentPath}`
-          : `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/${currentPath}`;
-      const fileBlob = await downloadFile(token, path);
+      // const path =
+      //   userData.role === "teacher" ? `${currentPath}` : `${currentPath}`;
+      const fileBlob = await downloadFile(token, currentPath);
 
       // Create a URL for the blob
       const fileUrl = window.URL.createObjectURL(fileBlob);

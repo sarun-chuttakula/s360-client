@@ -23,7 +23,7 @@ export const getClasses = async (token: string) => {
 export const getTimeTable = async (token: string, classId: string) => {
   try {
     const response = await fetch(
-      `http://192.168.0.109:5001/class/timetable?classId=${classId}`,
+      `${CLASSES_API_URLS}/timetable?classId=${classId}`,
       {
         method: "GET",
         headers: {
