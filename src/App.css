@@ -612,6 +612,7 @@ a:hover {
   height: calc(100% - 100px);
   overflow-y: auto;
   margin-bottom: 20px;
+  overflow-x: hidden;
 }
 /* Sent Message */
 .message {
@@ -620,18 +621,45 @@ a:hover {
   padding: 10px;
   border-radius: 10px;
 }
+/* Animate Sent Messages */
 .message.sent {
   background-color: #007bff;
   color: white;
   align-self: flex-end;
+  animation: fadeInRight 0.5s ease forwards;
 }
 
-/* Received Message */
+/* Animate Received Messages */
 .message.received {
   background-color: #fff;
   color: #333;
   align-self: flex-start;
+  animation: fadeInLeft 0.5s ease forwards;
 }
+
+/* Keyframe animations */
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Chat Input */
 .chat-input {
   width: 100%;
