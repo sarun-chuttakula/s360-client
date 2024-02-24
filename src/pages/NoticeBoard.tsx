@@ -86,7 +86,7 @@ const NoticeBoard: React.FC = () => {
   return (
     <div className="notice-board">
       <h1>Notice Board</h1>
-      <p>Welcome to the Notice Board</p>
+      {/* <p>Welcome to the Notice Board</p> */}
       {userRole === "teacher" || userRole === "admin" ? (
         <div className="notice-actions">
           <button

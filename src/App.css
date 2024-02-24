@@ -210,20 +210,26 @@ a:hover {
 /* NoticeBoard component styles */
 .notice-board {
   width: 400px;
-  background-color: #f0f0f0;
+  background-color: #f5f5f5; /* Light gray background */
   margin-right: 20px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   animation: fade-in 0.5s ease-in-out;
   position: relative;
-  border: #000000 solid 1px;
+  border: 1px solid #ddd; /* Light gray border */
   z-index: 1; /* Ensure it's above other content */
+}
+
+.notice-board h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #007bff; /* Blue heading color */
 }
 
 /* Add button styles */
 .add-notice-button {
-  background-color: #007bff;
+  background-color: #007bff; /* Blue button background */
   color: white;
   border: none;
   border-radius: 50%;
@@ -237,6 +243,10 @@ a:hover {
   top: 20px; /* Adjust position from top */
   right: 20px; /* Adjust position from right */
   z-index: 2; /* Ensure it's above other content */
+}
+
+.add-notice-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Animation for NoticeBoard */
@@ -308,7 +318,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 20px; /* Adjust position from top */
+  top: 5px; /* Adjust position from top */
   right: 20px; /* Adjust position from right */
 }
 
