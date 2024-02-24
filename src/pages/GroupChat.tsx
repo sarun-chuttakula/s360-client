@@ -224,6 +224,9 @@ const GroupChat = () => {
         if (data.success) {
           console.log("Group deleted successfully:", data.data);
           // Fetch updated group list after deleting the group
+          setGroups(groups.filter((group) => group.id !== groupId));
+          setSelectedGroup(null);
+          sessionStorage.removeItem("selectedGroup");
         } else {
           console.error("Failed to delete group:", data.message);
         }

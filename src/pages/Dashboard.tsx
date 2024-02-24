@@ -4,10 +4,12 @@ import { getClasses } from "../api";
 import useAuth from "../hooks/useAuth";
 import Timetable from "../components/Timetable";
 import "../styles/classes.css";
+import { useSelector } from "react-redux";
 const Dashboard = () => {
   const [classes, setClasses] = useState<any[]>([]);
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
   const auth = useAuth();
+  const userData = useSelector((state: any) => state.user.userData);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -19,8 +21,9 @@ const Dashboard = () => {
         console.error("Failed to fetch classes:", error);
       }
     };
-
-    fetchClasses();
+    console.log(userData.class);
+    if (userData.role === "teacher") fetchClasses();
+    if (userData.role === "student") setSelectedClassId(userData.class);
   }, [auth]);
 
   const handleClassClick = (classId: string) => {
@@ -31,32 +34,36 @@ const Dashboard = () => {
     <>
       <div className="main">
         <div className="dashboard">
-          <h1>Dashboard</h1>
-          <p>Welcome to the dashboard</p>
+          {/* <h1>Dashboard</h1> */}
+          {/* <p>Welcome to the dashboard</p> */}
         </div>
-        {auth?.role === "teacher" && classes.length > 0 && (
-          <div className="classes">
-            <h2>Classes</h2>
-            <ul>
-              {classes.map((classItem) => (
-                <li
-                  key={classItem.id}
-                  onClick={() => handleClassClick(classItem.id)}
-                >
-                  {classItem.year}yr &nbsp;
-                  {classItem.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
         <NoticeBoard />
-        {selectedClassId && (
-          <Timetable
-            classId={selectedClassId}
-            token={auth?.accesstoken as string}
-          />
+        {auth?.role === "teacher" && classes.length > 0 && (
+          <>
+            <div className="classes">
+              <h2>Classes</h2>
+              <ul>
+                {classes.map((classItem) => (
+                  <li
+                    key={classItem.id}
+                    onClick={() => handleClassClick(classItem.id)}
+                  >
+                    {classItem.year}yr &nbsp;
+                    {classItem.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
         )}
+        <div className="time-table">
+          {selectedClassId && (
+            <Timetable
+              classId={selectedClassId}
+              token={auth?.accesstoken as string}
+            />
+          )}
+        </div>
       </div>
     </>
   );

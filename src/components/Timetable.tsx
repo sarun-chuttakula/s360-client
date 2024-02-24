@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getTimeTable } from "../api"; // Adjust the path as per your file structure
+import { getTimeTable } from "../api";
+import "../styles/classes.css";
 
 interface TimetableProps {
   classId: string;
@@ -18,6 +19,7 @@ interface TimetableData {
 const Timetable: React.FC<TimetableProps> = ({ classId, token }) => {
   const [timetableData, setTimetableData] = useState<TimetableData>({});
   const [error, setError] = useState<string | null>(null);
+  const days = Object.keys(timetableData); // Dynamically get days from timetable data
 
   useEffect(() => {
     const fetchTimetable = async () => {
@@ -36,20 +38,31 @@ const Timetable: React.FC<TimetableProps> = ({ classId, token }) => {
     <div className="timetable">
       <h2>Timetable</h2>
       {error && <div>Error: {error}</div>}
-      <div>
-        {Object.entries(timetableData).map(([day, entries]) => (
-          <div key={day}>
-            <h3>{day}</h3>
-            <ul>
-              {entries.map((entry, index) => (
-                <li key={index}>
-                  {entry.period}: {entry.subject} - {entry.teacher_name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      <table>
+        <thead>
+          <tr>
+            {days.map((day, index) => (
+              <th key={index}>{day}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {days.map((day, index) => (
+              <td key={index}>
+                <ul>
+                  {timetableData[day]?.map((entry, i) => (
+                    <li key={i}>
+                      <strong>{entry.period}:</strong> {entry.subject} -{" "}
+                      {entry.teacher_name}
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
