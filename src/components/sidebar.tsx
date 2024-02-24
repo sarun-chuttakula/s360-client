@@ -7,8 +7,8 @@ import { BsCashCoin } from "react-icons/bs";
 import { GiRank3 } from "react-icons/gi";
 import { AiFillCarryOut } from "react-icons/ai";
 import { IoLibraryOutline } from "react-icons/io5";
-import useAuth from "../../hooks/useAuth";
-
+import useAuth from "../hooks/useAuth";
+import "../styles/sidebar.css";
 const Sidebar = () => {
   const location = useLocation();
   const pathname = location.pathname;

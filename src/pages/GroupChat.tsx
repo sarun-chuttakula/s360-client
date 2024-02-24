@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Group, ApiResponse } from "../interfaces";
-import GroupForm, { GroupData } from "../components/GroupForm/GroupForm";
+import { Group, ApiResponse } from "../dtos";
+import GroupForm, { GroupData } from "../components/GroupForm";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { IoSend } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
@@ -14,6 +14,7 @@ import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
 import * as io from "socket.io-client";
 import { BASE_API_URL } from "../api/api-resource";
+import "../styles/group-chat.css";
 // import { ClientToServerEvents, ServerToClientEvents } from "../types/typings";
 let socket: any;
 const GroupChat = () => {

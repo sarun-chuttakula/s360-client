@@ -1,4 +1,4 @@
-import { ApiResponse } from "../interfaces";
+import { ApiResponse } from "../dtos";
 import { NOTICE_BOARD_API_URLS } from "./api-resource";
 
 export const SendNotice = async (

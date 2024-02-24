@@ -1,0 +1,36 @@
+/* Classes Container Styles */
+.classes {
+  margin-right: 10px;
+  padding: 20px;
+  /* border: 1px solid #000000; */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.classes h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.classes ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.classes li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+  animation: slide-in 0.5s ease-in-out;
+}
+
+.classes li:last-child {
+  border-bottom: none;
+}
+
+.classes li:hover {
+  background-color: #f5f5f5;
+}

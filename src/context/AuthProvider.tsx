@@ -7,7 +7,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { Role } from "../interfaces/Role";
+import { Role } from "../enums/user.enum";
 
 interface AuthData {
   id: string;

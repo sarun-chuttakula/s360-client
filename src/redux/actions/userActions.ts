@@ -1,6 +1,6 @@
 // redux/actions/userActions.ts
 
-import { Role } from "../../interfaces/Role";
+import { Role } from "../../enums/user.enum";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";

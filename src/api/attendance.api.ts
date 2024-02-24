@@ -1,4 +1,4 @@
-import { INewAttendanceRequest } from "../interfaces/attendance.dto";
+import { INewAttendanceRequest } from "../dtos/attendance.dto";
 import { ATTENDANCE_API_URLS } from "./api-resource";
 
 export const getStudentsAttendance = async (token: string) => {

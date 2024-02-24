@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../styles/group-chat.css";
 export interface GroupData {
   name: string;
   description: string;

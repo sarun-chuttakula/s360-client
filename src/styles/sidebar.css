@@ -1,0 +1,65 @@
+/* CSS for Sidebar component */
+.side-bar {
+  width: 250px;
+  background-color: #ffffff;
+  padding-top: 50px;
+}
+
+.side-bar a {
+  display: flex;
+  align-items: center;
+  color: #000000;
+  text-decoration: none;
+  padding: 10px 20px;
+  position: relative;
+  margin-left: 20px;
+}
+
+.side-bar a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.side-bar a:hover::after {
+  background-color: rgba(
+    66,
+    42,
+    251,
+    0.1
+  ); /* Add a transparent background color on hover */
+}
+
+.sidebar-icon {
+  color: #000000;
+  transition: color 0.3s;
+}
+
+.sidebar-text {
+  font-weight: normal;
+}
+
+.side-bar a.active::after {
+  background-color: rgb(
+    66,
+    42,
+    251
+  ); /* Apply the active background color only to the active item */
+}
+
+.side-bar a.active .sidebar-icon {
+  color: rgb(66, 42, 251); /* Apply the active color only to the active item */
+}
+
+.side-bar a.active .sidebar-text {
+  font-weight: bold; /* Apply the bold font weight only to the active item */
+}
+
+.side-bar a svg {
+  margin-right: 10px; /* Adjust the spacing between icon and text */
+}

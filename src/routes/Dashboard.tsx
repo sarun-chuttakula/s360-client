@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
-import Layout from "../components/layout/Layout";
+import Layout from "../components/Layout";
 
 const DashboardRouter = () => {
   return (

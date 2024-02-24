@@ -1,0 +1,89 @@
+/* Feedback component styles */
+.feedback {
+  position: fixed; /* Change to fixed position */
+  bottom: 20px;
+  right: 20px;
+  z-index: 102;
+}
+
+.feedback-icon {
+  background-color: #007bff;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.feedback-icon:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.chat-box {
+  position: fixed; /* Change to fixed position */
+  bottom: 80px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 20px;
+  animation: slide-up 0.3s ease;
+  z-index: 103;
+}
+
+/* Additional styles for animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-box h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.chat-box form input,
+.chat-box form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.chat-box form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-box form button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.feedback-status {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #333; /* Dark grey text */
+}

@@ -1,0 +1,161 @@
+/* NoticeBoard component styles */
+.notice-board {
+  width: 400px;
+  background-color: #f5f5f5; /* Light gray background */
+  margin-right: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fade-in 0.5s ease-in-out;
+  position: relative;
+  border: 1px solid #ddd; /* Light gray border */
+  z-index: 1; /* Ensure it's above other content */
+}
+
+.notice-board h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #007bff; /* Blue heading color */
+}
+
+/* Add button styles */
+.add-notice-button {
+  background-color: #007bff; /* Blue button background */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 20px; /* Adjust position from top */
+  right: 20px; /* Adjust position from right */
+  z-index: 2; /* Ensure it's above other content */
+}
+
+.add-notice-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Animation for NoticeBoard */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation for NoticeItem */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.notice-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.notice-item {
+  background-color: #ffffff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slide-in 0.5s ease-in-out;
+  position: relative;
+}
+
+.notice-title {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.notice-description {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.notice-image {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* Add button styles */
+.add-notice-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 5px; /* Adjust position from top */
+  right: 20px; /* Adjust position from right */
+}
+
+.add-notice-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.notice-form {
+  margin-top: 20px; /* Adjust margin-top as needed */
+}
+
+.notice-form input[type="text"],
+.notice-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical; /* Allow vertical resizing of textarea */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+.notice-form textarea {
+  min-height: 100px; /* Set minimum height for textarea */
+}
+
+.notice-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.notice-form button:hover {
+  background-color: #0056b3;
+}
+
+.delete-notice {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  /* Adjust color as needed  red*/
+  color: tomato;
+}

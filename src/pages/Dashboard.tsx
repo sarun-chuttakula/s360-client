@@ -3,7 +3,7 @@ import NoticeBoard from "./NoticeBoard";
 import { getClasses } from "../api";
 import useAuth from "../hooks/useAuth";
 import Timetable from "../components/Timetable";
-
+import "../styles/classes.css";
 const Dashboard = () => {
   const [classes, setClasses] = useState<any[]>([]);
   const [selectedClassId, setSelectedClassId] = useState<string | null>(null);

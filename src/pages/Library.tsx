@@ -3,7 +3,7 @@ import { Tree } from "@geist-ui/react";
 import { getFolderStructure, downloadFile } from "../api/library.api";
 import { useSelector } from "react-redux";
 import useAuth from "../hooks/useAuth";
-
+import "../styles/directory.css";
 type FileTreeValue = {
   type: "directory" | "file";
   name: string;

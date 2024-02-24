@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getStudentsAttendance, markAttendance } from "../api/attendance.api";
 import useAuth from "../hooks/useAuth";
-
+import "../styles/attendance.css";
 const AttendanceBoard: React.FC = () => {
   const auth = useAuth();
   const [students, setStudents] = useState<any[]>([]);

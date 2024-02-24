@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import { Role } from "../../interfaces/Role";
+import useAuth from "../hooks/useAuth";
+import { Role } from "../enums/user.enum";
 
 interface RequireAuthProps {
   allowedRoles: Role[];

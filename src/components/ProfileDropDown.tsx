@@ -1,9 +1,9 @@
 // ProfileDropdown.js
 import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useAuth from "../../hooks/useAuth";
-import AuthContext from "../../context/AuthProvider";
-
+import useAuth from ".././hooks/useAuth";
+import AuthContext from ".././context/AuthProvider";
+import "../styles/profile-icon.css";
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
 

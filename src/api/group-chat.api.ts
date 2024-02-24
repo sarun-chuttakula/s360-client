@@ -1,7 +1,10 @@
-import { ApiResponse } from "../interfaces";
+import { ApiResponse } from "../dtos";
 import { GROUP_API_URLS, MESSAGE_API_URLS } from "./api-resource";
 
-export const CreateGroup = async (token:string,data: any): Promise<ApiResponse> => {
+export const CreateGroup = async (
+  token: string,
+  data: any
+): Promise<ApiResponse> => {
   try {
     const response = await fetch(GROUP_API_URLS, {
       method: "POST",
@@ -27,7 +30,7 @@ export const CreateGroup = async (token:string,data: any): Promise<ApiResponse> 
   }
 };
 
-export const GetGroups = async (token:string,) => {
+export const GetGroups = async (token: string) => {
   try {
     const response = await fetch(GROUP_API_URLS, {
       method: "GET",
@@ -48,7 +51,7 @@ export const GetGroups = async (token:string,) => {
   }
 };
 
-export const GetGroup = async (token:string,groupId: string) => {
+export const GetGroup = async (token: string, groupId: string) => {
   try {
     const response = await fetch(`${GROUP_API_URLS}/${groupId}`, {
       method: "GET",
@@ -69,7 +72,11 @@ export const GetGroup = async (token:string,groupId: string) => {
   }
 };
 
-export const UpdateGroup = async (token:string,groupId: string, data: any) => {
+export const UpdateGroup = async (
+  token: string,
+  groupId: string,
+  data: any
+) => {
   try {
     const response = await fetch(`${GROUP_API_URLS}/${groupId}`, {
       method: "PUT",
@@ -91,7 +98,7 @@ export const UpdateGroup = async (token:string,groupId: string, data: any) => {
   }
 };
 
-export const DeleteGroup = async (token:string,groupId: string) => {
+export const DeleteGroup = async (token: string, groupId: string) => {
   try {
     const response = await fetch(`${GROUP_API_URLS}/?groupId=${groupId}`, {
       method: "DELETE",
@@ -112,7 +119,11 @@ export const DeleteGroup = async (token:string,groupId: string) => {
   }
 };
 
-export const GetAllMessages = async (token:string,groupId: string, page: number) => {
+export const GetAllMessages = async (
+  token: string,
+  groupId: string,
+  page: number
+) => {
   try {
     const response = await fetch(
       `${MESSAGE_API_URLS}/?groupId=${groupId}&page=${page}`,
@@ -136,7 +147,7 @@ export const GetAllMessages = async (token:string,groupId: string, page: number)
   }
 };
 
-export const SendMessage = async (token:string,data: any) => {
+export const SendMessage = async (token: string, data: any) => {
   try {
     const response = await fetch(MESSAGE_API_URLS, {
       method: "POST",

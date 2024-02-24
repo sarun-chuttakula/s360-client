@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Register } from "../api";
-import { ApiResponse } from "../interfaces/Auth";
+import { ApiResponse } from "../dtos/response.dto";
 
 const SignupScreen: React.FC = () => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import { ApiResponse } from "../interfaces/Auth";
+import { ApiResponse } from "../dtos/response.dto";
 import { AUTH_API_URLS } from "./api-resource";
 
 export const Register = async (data: any): Promise<ApiResponse> => {

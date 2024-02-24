@@ -1,14 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "./components/sidebar/sidebar";
+import Sidebar from "./components/sidebar";
 import Dashboard from "./pages/Dashboard";
 import GroupChat from "./pages/GroupChat";
 import FeeBoard from "./pages/FeeBoard";
 import ResultBoard from "./pages/ResultBoard";
 import AttendanceBoard from "./pages/AttendanceBoard";
 import Library from "./pages/Library";
-import Feedback from "./components/feedbackbox/feedback";
-import Layout from "./components/layout/Layout";
+import Feedback from "./components/feedback";
+import Layout from "./components/Layout";
 
 function Main() {
   return (

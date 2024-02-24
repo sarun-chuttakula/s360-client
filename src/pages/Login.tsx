@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"; // Import useDispatch hook
 import { login } from "../redux/actions/userActions"; // Import the login action
 import { Login } from "../api";
-import { ApiResponse } from "../interfaces/Auth";
+import { ApiResponse } from "../dtos/response.dto";
 import AuthContext from "../context/AuthProvider";
 // import { useAuth0 } from "@auth0/auth0-react";
 const LoginScreen: React.FC = () => {

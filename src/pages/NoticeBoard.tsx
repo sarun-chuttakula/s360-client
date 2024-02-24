@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { DeleteNotice, GetNotices } from "../api/notice-board.api";
-import { ApiResponse } from "../interfaces";
+import { ApiResponse } from "../dtos";
 import useAuth from "../hooks/useAuth";
+import "../styles/notice-board.css";
 interface Notice {
   id: string;
   title: string;

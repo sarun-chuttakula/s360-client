@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { VscFeedback } from "react-icons/vsc";
-
+import "../styles/feedback-box.css";
 const Feedback = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [feedback, setFeedback] = useState({
