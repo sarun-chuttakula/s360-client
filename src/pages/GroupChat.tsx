@@ -296,7 +296,14 @@ const GroupChat = () => {
             <div className="chat-content">
               <div ref={chatContainerRef} className="chat-messages">
                 {messages.map((msg, index) => (
-                  <div key={index}>{msg.message}</div>
+                  <div
+                    key={index}
+                    className={`message ${
+                      msg.sender === userData.id ? "sent" : "received"
+                    }`}
+                  >
+                    {msg.message}
+                  </div>
                 ))}
               </div>
             </div>
