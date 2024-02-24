@@ -107,7 +107,6 @@ const GroupChat = () => {
     }
   }, [selectedGroup, currentPage]);
   useEffect(() => {
-    console.log(messages.length);
     // Store scroll position in sessionStorage when component unmounts
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =

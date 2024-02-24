@@ -10,6 +10,7 @@ const ProfileDropdown = () => {
   const { logout } = useContext(AuthContext);
 
   const handleLogout = () => {
+    sessionStorage.removeItem("selectedGroup");
     logout();
     dispatch({ type: "LOGOUT" });
   };

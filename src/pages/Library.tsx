@@ -21,7 +21,6 @@ const MyTree: React.FC = () => {
     const fetchData = async () => {
       try {
         const batch = userData.batch;
-        console.log("Batch:", batch);
         const path = userData.role === "student" ? `/${batch}` : "";
         const responseData = await getFolderStructure(token, path);
 
