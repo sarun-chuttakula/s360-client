@@ -94,7 +94,7 @@ function Main() {
         </div>
       </div>
       {/* </Router> */}
-      {auth ? (
+      {auth && auth.role === "student" ? (
         <div className="feedback-container">
           <Feedback />
         </div>

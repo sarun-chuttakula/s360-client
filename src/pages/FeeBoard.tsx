@@ -36,8 +36,8 @@ const FeeBoard = () => {
   }, [auth, isTeacher, userData.ht_no]);
 
   return (
-    <div className="m-3">
-      <h2 className="text-xl text-gray-900 font-semibold">FeeBoard</h2>
+    <div className="feeboard-container">
+      <h1>FeeBoard</h1>
       {error && <div>Error: {error}</div>}
       {feeDetails.length > 0 ? (
         <table className="border-collapse border border-gray-400">
