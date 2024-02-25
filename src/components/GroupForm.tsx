@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/group-chat.css";
+
 export interface GroupData {
   name: string;
   description: string;
@@ -60,9 +61,14 @@ const GroupForm: React.FC<GroupFormProps> = ({ onAddGroup, onClose }) => {
               className="group-form-input"
             />
           </label>
-          <button type="submit" className="group-form-button">
-            Create Group
-          </button>
+          <div className="group-buttons">
+            <button type="submit" className="group-form-button">
+              Create Group
+            </button>
+            <button className="close-button" onClick={onClose}>
+              Close
+            </button>
+          </div>
         </form>
       </div>
     </div>

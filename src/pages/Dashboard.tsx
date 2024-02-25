@@ -21,10 +21,9 @@ const Dashboard = () => {
         console.error("Failed to fetch classes:", error);
       }
     };
-    console.log(userData.class);
     if (userData.role === "teacher") fetchClasses();
     if (userData.role === "student") setSelectedClassId(userData.class);
-  }, [auth]);
+  }, [auth, userData.class, userData.role]);
 
   const handleClassClick = (classId: string) => {
     setSelectedClassId(classId);

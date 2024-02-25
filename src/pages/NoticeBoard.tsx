@@ -84,6 +84,10 @@ const NoticeBoard: React.FC = () => {
       });
   };
 
+  if (notices.length === 0 && userRole !== "teacher" && userRole !== "admin") {
+    return null;
+  }
+
   return (
     <div className="notice-board">
       <h1>Notice Board</h1>

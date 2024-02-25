@@ -36,7 +36,7 @@ const Timetable: React.FC<TimetableProps> = ({ classId, token }) => {
 
   return (
     <div className="timetable">
-      <h2>Timetable</h2>
+      {/* <h2>Timetable</h2> */}
       {error && <div>Error: {error}</div>}
       <table>
         <thead>

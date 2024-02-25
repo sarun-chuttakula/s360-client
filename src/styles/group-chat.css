@@ -3,13 +3,14 @@
   display: flex;
   height: 80vh;
   border-radius: 10px;
-  border: #000000 solid 1px;
+  /* border: #000000 solid 1px; */
+  box-shadow: #ccc 0px 0px 10px;
 }
 
 /* Group List Container */
 .group-list {
   flex: 1;
-  background-color: #2c3e50; /* Dark blue */
+  background-color: #232e3a; /* Dark blue */
   padding: 20px;
   border-radius: 9px 0 0 9px;
   position: fixed;
@@ -43,8 +44,8 @@
 
 .add-group {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 20px;
+  right: 20px;
 }
 
 .add-group-icon {
@@ -67,13 +68,15 @@
 .group-form-container {
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+  width: 400px;
 }
 
 .group-form-label {
   display: block;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #333;
 }
 
 .group-form-input {
@@ -83,16 +86,21 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.group-buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
-.group-form-button {
+.group-form-button,
+.close-button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 10px 20px; /* uncomment this line */
+  border-radius: 30px;
   cursor: pointer;
+  margin: 10px;
 }
-
 .group-form-button:hover {
   background-color: #0056b3;
 }
