@@ -37,7 +37,7 @@ const FeeBoard = () => {
 
   return (
     <div className="feeboard-container">
-      <h1>FeeBoard</h1>
+      {/* <h1>FeeBoard</h1> */}
       {error && <div>Error: {error}</div>}
       {feeDetails.length > 0 ? (
         <table className="border-collapse border border-gray-400">

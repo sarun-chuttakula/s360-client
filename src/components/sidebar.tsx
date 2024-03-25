@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { LuMessagesSquare } from "react-icons/lu";
 import { BsCashCoin } from "react-icons/bs";
-import { GiRank3 } from "react-icons/gi";
+// import { GiRank3 } from "react-icons/gi";
 import { AiFillCarryOut } from "react-icons/ai";
 import { IoLibraryOutline } from "react-icons/io5";
 import useAuth from "../hooks/useAuth";
@@ -32,13 +32,13 @@ const Sidebar = () => {
         <BsCashCoin className="sidebar-icon" />
         <span className="sidebar-text">Financial Details</span>
       </Link>
-      <Link
+      {/* <Link
         to="/result-board"
         className={pathname === "/result-board" ? "active" : ""}
       >
         <GiRank3 className="sidebar-icon" />
         <span className="sidebar-text">ResultBoard</span>
-      </Link>
+      </Link> */}
       {auth?.role === "teacher" && (
         <Link
           to="/attendance-board"
