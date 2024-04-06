@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { getStudentsAttendance, markAttendance } from "../api/attendance.api";
 import useAuth from "../hooks/useAuth";
 import "../styles/attendance.css";
+
 const AttendanceBoard: React.FC = () => {
   const auth = useAuth();
   const [students, setStudents] = useState<any[]>([]);
   const [attendanceStatus, setAttendanceStatus] = useState<any>({});
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -31,6 +33,18 @@ const AttendanceBoard: React.FC = () => {
         ht_no: student.ht_no,
       }));
       await markAttendance(studentsToMarkAttendance, `${auth?.accesstoken}`);
+
+      setSuccessMessage("Attendance marked successfully!");
+
+      // Reset attendance status after 2 seconds
+      setTimeout(() => {
+        const initialStatus = students.reduce((acc: any, student: any) => {
+          acc[student.id] = false;
+          return acc;
+        }, {});
+        setAttendanceStatus(initialStatus);
+        setSuccessMessage("");
+      }, 2000);
     } catch (error) {
       console.error("Error marking attendance:", error);
     }
@@ -77,6 +91,9 @@ const AttendanceBoard: React.FC = () => {
         </tbody>
       </table>
       <button onClick={handleMarkAttendance}>Mark Attendance</button>
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
     </div>
   );
 };

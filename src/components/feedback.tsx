@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { VscFeedback } from "react-icons/vsc";
 import "../styles/feedback-box.css";
+import useAuth from "../hooks/useAuth";
 const Feedback = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const auth = useAuth();
+  const token = auth?.accesstoken;
   const [feedback, setFeedback] = useState({
     title: "",
     description: "",
@@ -29,8 +32,7 @@ const Feedback = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUzYWNlOTI3LWE2YjEtNGEzOC04NGMwLWQ0NTAwNzI1N2I3MiIsInJvbGUiOiJ0ZWFjaGVyIiwidXVpZCI6IjVjYjVhMTY4LTY4ZmUtNDZmNi1hYjRjLWQyOWViODQyMmQyZSIsImV4cCI6MTcwOTM4MjQwMSwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTcwODA4NjQwMX0.xU1cDi6qkCjxOgXZw-I2qQ8Izh3B64HSkeo785JXOEE",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(feedback),
     })
@@ -38,6 +40,14 @@ const Feedback = () => {
       .then((data) => {
         if (data.success) {
           setFeedbackStatus("Feedback submitted successfully");
+          setFeedback({
+            title: "",
+            description: "",
+            image: "",
+          });
+          setTimeout(() => {
+            setIsOpen(false);
+          }, 1000);
         } else {
           setFeedbackStatus("Failed to submit feedback");
         }
