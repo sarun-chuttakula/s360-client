@@ -25,13 +25,15 @@ const Sidebar = () => {
         <LuMessagesSquare className="sidebar-icon" />
         <span className="sidebar-text">Groups</span>
       </Link>
-      <Link
-        to="/fee-details"
-        className={pathname === "/fee-details" ? "active" : ""}
-      >
-        <BsCashCoin className="sidebar-icon" />
-        <span className="sidebar-text">Financial Details</span>
-      </Link>
+      {auth?.role === "student" && (
+        <Link
+          to="/fee-details"
+          className={pathname === "/fee-details" ? "active" : ""}
+        >
+          <BsCashCoin className="sidebar-icon" />
+          <span className="sidebar-text">Financial Details</span>
+        </Link>
+      )}
       {/* <Link
         to="/result-board"
         className={pathname === "/result-board" ? "active" : ""}
