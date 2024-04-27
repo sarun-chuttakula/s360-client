@@ -12,11 +12,12 @@ const LoginScreen: React.FC = () => {
 
   // const handleLogin = () => {
   //   loginWithRedirect();
-  //   console.log("User:", user);
-  //   console.log("IsAuthenticated:", isAuthenticated);
+  //   //console.log("User:", user);
+  //   //console.log("IsAuthenticated:", isAuthenticated);
   // };
   const { setAuth } = useContext(AuthContext);
-  const dispatch = useDispatch(); // Initialize useDispatch hook
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -31,21 +32,25 @@ const LoginScreen: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response: ApiResponse = await Login(formData);
-    if (response.success) {
-      console.log("Token:", response.data.accesstoken);
-      localStorage.setItem("token", response.data.accesstoken);
-      setAuth(response.data);
-      const userData = response.data;
-      console.log("User Data1:", userData);
-      // Dispatch the login action with user data
-      dispatch(login(userData));
-      navigate("/");
-    } else {
-      navigate("/login");
+    try {
+      const response: ApiResponse = await Login(formData);
+      if (response.success) {
+        //console.log("Token:", response.data.accesstoken);
+        localStorage.setItem("token", response.data.accesstoken);
+        setAuth(response.data);
+        const userData = response.data;
+        //console.log("User Data1:", userData);
+        // Dispatch the login action with user data
+        dispatch(login(userData));
+        navigate("/");
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      setError("Invalid Credentials");
     }
   };
-  console.log("User Data:", userData);
+  //console.log("User Data:", userData);
 
   return (
     <div className="Login-container">

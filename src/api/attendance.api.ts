@@ -61,7 +61,7 @@ export const markAttendance = async (
       },
       body: JSON.stringify(transformedPayload),
     });
-    console.log(JSON.stringify({ transformedPayload }));
+    //console.log(JSON.stringify({ transformedPayload }));
     if (!response.ok) {
       throw new Error("Failed to mark attendance");
     }

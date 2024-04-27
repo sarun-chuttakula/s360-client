@@ -39,12 +39,12 @@ const GroupChat = () => {
     setNewMessagesCount(initialNewMessagesCount);
     socket = io.connect(BASE_API_URL);
     socket.on("connect", () => {
-      console.log("Connected");
+      //console.log("Connected");
     });
     socket.on("serverMsg", (data: any) => {
-      console.log(socket.id);
-      console.log(data);
-      console.log(data.message);
+      //console.log(socket.id);
+      //console.log(data);
+      //console.log(data.message);
       if (data.group.id === selectedGroup?.id) {
         setMessages((prevMessages) => [...prevMessages, data]);
       } else {
@@ -158,12 +158,12 @@ const GroupChat = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessageInput(event.target.value);
-    console.log("handleInputChange called!");
+    //console.log("handleInputChange called!");
   };
 
   const handleMessageSend = () => {
     if (messageInput.trim() === "") return;
-    console.log("Sending message!");
+    //console.log("Sending message!");
     sendMessage();
   };
 
@@ -187,11 +187,11 @@ const GroupChat = () => {
   };
 
   const handleAddGroup = (groupData: GroupData) => {
-    console.log("Adding group:", groupData);
+    //console.log("Adding group:", groupData);
     CreateGroup(token, groupData)
       .then((data: ApiResponse) => {
         if (data.success) {
-          console.log("Group added successfully:", data.data);
+          //console.log("Group added successfully:", data.data);
           // Fetch updated group list after adding the group
           GetGroups(token)
             .then((updatedData: ApiResponse) => {
@@ -218,11 +218,11 @@ const GroupChat = () => {
   };
 
   const handleDeleteGroup = (groupId: string) => {
-    console.log("Deleting group:", groupId);
+    //console.log("Deleting group:", groupId);
     DeleteGroup(token, groupId)
       .then((data: ApiResponse) => {
         if (data.success) {
-          console.log("Group deleted successfully:", data.data);
+          //console.log("Group deleted successfully:", data.data);
           // Fetch updated group list after deleting the group
           setGroups(groups.filter((group) => group.id !== groupId));
           setSelectedGroup(null);

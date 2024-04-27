@@ -11,13 +11,13 @@ const Profile: React.FC = () => {
 
   const handleLogout = () => {
     // Implement your logout logic here
-    console.log("Logout clicked");
+    //console.log("Logout clicked");
     setIsOpen(false);
   };
 
   const handleDetails = () => {
     // Implement your details logic here
-    console.log("Details clicked");
+    //console.log("Details clicked");
     setIsOpen(false);
   };
 

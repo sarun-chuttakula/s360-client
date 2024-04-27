@@ -41,7 +41,7 @@ const MyTree: React.FC = () => {
     currentPath: string
   ) => {
     try {
-      console.log("File Path:", currentPath);
+      //console.log("File Path:", currentPath);
       // const path =
       //   userData.role === "teacher" ? `${currentPath}` : `${currentPath}`;
       const fileBlob = await downloadFile(token, currentPath);
@@ -68,7 +68,7 @@ const MyTree: React.FC = () => {
 
   // const handleItemClick = async (filename: string, currentPath: string) => {
   //   try {
-  //     console.log("File Path:", currentPath);
+  //     //console.log("File Path:", currentPath);
   //     const token = ""; // Add your authentication token here
   //     const filePath = `/home/xelpmoc/Documents/Code/OWN/s360-server/src/thumbnails/types/express/${filename}`;
   //     const fileData: Blob = await downloadFile(token, filePath);

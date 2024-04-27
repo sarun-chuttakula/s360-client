@@ -21,7 +21,7 @@ export const CreateGroup = async (
 
     const responseData = await response.json();
 
-    console.log("Group created successfully");
+    //console.log("Group created successfully");
 
     return responseData; // Assuming the response data structure matches ApiResponse
   } catch (error: any) {

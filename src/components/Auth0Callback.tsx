@@ -9,7 +9,7 @@
 //   const { isAuthenticated, isLoading, user, getIdTokenClaims } = useAuth0();
 //   const dispatch = useDispatch();
 //   const navigate = useNavigate();
-//   console.log("User:", user);
+//   //console.log("User:", user);
 
 //   useEffect(() => {
 //     const handleAuthentication = async () => {

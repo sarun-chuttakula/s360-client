@@ -17,7 +17,7 @@ export const Register = async (data: any): Promise<ApiResponse> => {
 
     const responseData = await response.json();
 
-    console.log("User registered successfully");
+    //console.log("User registered successfully");
 
     return responseData; // Assuming the response data structure matches ApiResponse
   } catch (error: any) {

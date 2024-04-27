@@ -72,7 +72,7 @@ const NoticeBoard: React.FC = () => {
     DeleteNotice(noticeId, auth?.accesstoken as string)
       .then((data: ApiResponse) => {
         if (data.success) {
-          console.log("Notice deleted successfully:", data.data);
+          //console.log("Notice deleted successfully:", data.data);
           // Fetch updated notice list after deleting the notice
           fetchNotices();
         } else {

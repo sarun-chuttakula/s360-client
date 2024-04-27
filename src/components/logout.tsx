@@ -11,9 +11,9 @@ const LogoutButton = () => {
   };
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => state.user.userData);
-  console.log("User Data:", userData);
+  //console.log("User Data:", userData);
 
-  // console.log("User Data:", userData);
+  // //console.log("User Data:", userData);
 
   return (
     <button onClick={handleLogout} className="logout-button">

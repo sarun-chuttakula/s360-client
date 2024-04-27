@@ -21,7 +21,7 @@ export const SendNotice = async (
 
     const responseData = await response.json();
 
-    console.log("Notice created successfully");
+    //console.log("Notice created successfully");
 
     return responseData; // Assuming the response data structure matches ApiResponse
   } catch (error: any) {
