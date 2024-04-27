@@ -56,6 +56,7 @@ const LoginScreen: React.FC = () => {
     <div className="Login-container">
       <form className="Login-form" onSubmit={handleSubmit}>
         <h1>Login Up Page</h1>
+        {error && <p className="text-danger">{error}</p>}
 
         <div className="form-group">
           <label htmlFor="username">Username</label>
